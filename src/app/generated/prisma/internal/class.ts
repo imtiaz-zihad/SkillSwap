@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.3.0",
   "engineVersion": "9d6ad21cbbceab97458517b147a6a09ff43aa735",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../../src/app/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel user {\n  id   Int    @id @default(autoincrement())\n  name String\n}\n",
+  "inlineSchema": "enum UserRole {\n  LEARNER\n  INSTRUCTOR\n  ADMIN\n}\n\nenum UserStatus {\n  ACTIVE\n  INACTIVE\n  DELETED\n}\n\nenum IssueStatus {\n  OPEN\n  IN_SESSION\n  SOLVED\n  NOT_SOLVED\n}\n\nenum SessionStatus {\n  ONGOING\n  ENDED\n}\n\nenum PaymentStatus {\n  PENDING\n  SUCCESS\n  FAILED\n}\n\nenum ReviewTarget {\n  LEARNER\n  INSTRUCTOR\n}\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../../src/app/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id                 String      @id @default(uuid())\n  email              String      @unique\n  password           String\n  role               UserRole    @default(LEARNER)\n  coins              Int         @default(0)\n  needPasswordChange Boolean     @default(true)\n  status             UserStatus  @default(ACTIVE)\n  createdAt          DateTime    @default(now())\n  updatedAt          DateTime    @updatedAt\n  admin              Admin?\n  instructor         Instructor?\n  learner            Learner?\n\n  @@map(\"users\")\n}\n\nmodel Admin {\n  id            String  @id @default(uuid())\n  name          String\n  email         String  @unique\n  profilePhoto  String?\n  contactNumber String?\n  isDeleted     Boolean @default(false)\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  user User @relation(fields: [email], references: [email])\n\n  @@map(\"admins\")\n}\n\nmodel Instructor {\n  id            String   @id @default(uuid())\n  name          String\n  email         String   @unique\n  profilePhoto  String?\n  contactNumber String\n  bio           String?\n  skills        String\n  experience    Int      @default(0)\n  averageRating Float    @default(0.0)\n  isDeleted     Boolean  @default(false)\n  createdAt     DateTime @default(now())\n  updatedAt     DateTime @updatedAt\n\n  user User @relation(fields: [email], references: [email])\n\n  @@map(\"instructors\")\n}\n\nmodel Learner {\n  id           String  @id @default(uuid())\n  name         String\n  email        String  @unique\n  profilePhoto String?\n  address      String?\n  isDeleted    Boolean @default(false)\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  user User @relation(fields: [email], references: [email])\n\n  @@map(\"learners\")\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -28,7 +28,7 @@ const config: runtime.GetPrismaClientConfig = {
   }
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"user\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"UserRole\"},{\"name\":\"coins\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"needPasswordChange\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"UserStatus\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"admin\",\"kind\":\"object\",\"type\":\"Admin\",\"relationName\":\"AdminToUser\"},{\"name\":\"instructor\",\"kind\":\"object\",\"type\":\"Instructor\",\"relationName\":\"InstructorToUser\"},{\"name\":\"learner\",\"kind\":\"object\",\"type\":\"Learner\",\"relationName\":\"LearnerToUser\"}],\"dbName\":\"users\"},\"Admin\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"profilePhoto\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"contactNumber\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isDeleted\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AdminToUser\"}],\"dbName\":\"admins\"},\"Instructor\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"profilePhoto\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"contactNumber\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"bio\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"skills\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"experience\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"averageRating\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"isDeleted\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"InstructorToUser\"}],\"dbName\":\"instructors\"},\"Learner\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"profilePhoto\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"address\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isDeleted\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"LearnerToUser\"}],\"dbName\":\"learners\"}},\"enums\":{},\"types\":{}}")
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
   const { Buffer } = await import('node:buffer')
@@ -177,14 +177,44 @@ export interface PrismaClient<
   }>>
 
       /**
-   * `prisma.user`: Exposes CRUD operations for the **user** model.
+   * `prisma.user`: Exposes CRUD operations for the **User** model.
     * Example usage:
     * ```ts
     * // Fetch zero or more Users
     * const users = await prisma.user.findMany()
     * ```
     */
-  get user(): Prisma.userDelegate<ExtArgs, { omit: OmitOpts }>;
+  get user(): Prisma.UserDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.admin`: Exposes CRUD operations for the **Admin** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Admins
+    * const admins = await prisma.admin.findMany()
+    * ```
+    */
+  get admin(): Prisma.AdminDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.instructor`: Exposes CRUD operations for the **Instructor** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Instructors
+    * const instructors = await prisma.instructor.findMany()
+    * ```
+    */
+  get instructor(): Prisma.InstructorDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.learner`: Exposes CRUD operations for the **Learner** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Learners
+    * const learners = await prisma.learner.findMany()
+    * ```
+    */
+  get learner(): Prisma.LearnerDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(): PrismaClientConstructor {

@@ -1,4 +1,67 @@
-model user{
-    id Int @id @default(autoincrement())
-    name String
+model User {
+    id                 String      @id @default(uuid())
+    email              String      @unique
+    password           String
+    role               UserRole    @default(LEARNER)
+    coins              Int         @default(0)
+    needPasswordChange Boolean     @default(true)
+    status             UserStatus  @default(ACTIVE)
+    createdAt          DateTime    @default(now())
+    updatedAt          DateTime    @updatedAt
+    admin              Admin?
+    instructor         Instructor?
+    learner            Learner?
+
+    @@map("users")
+}
+
+model Admin {
+    id            String  @id @default(uuid())
+    name          String
+    email         String  @unique
+    profilePhoto  String?
+    contactNumber String?
+    isDeleted     Boolean @default(false)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    user User @relation(fields: [email], references: [email])
+
+    @@map("admins")
+}
+
+model Instructor {
+    id            String   @id @default(uuid())
+    name          String
+    email         String   @unique
+    profilePhoto  String?
+    contactNumber String
+    bio           String?
+    skills        String
+    experience    Int      @default(0)
+    averageRating Float    @default(0.0)
+    isDeleted     Boolean  @default(false)
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+
+    user User @relation(fields: [email], references: [email])
+
+    @@map("instructors")
+}
+
+model Learner {
+    id           String  @id @default(uuid())
+    name         String
+    email        String  @unique
+    profilePhoto String?
+    address      String?
+    isDeleted    Boolean @default(false)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    user User @relation(fields: [email], references: [email])
+
+    @@map("learners")
 }

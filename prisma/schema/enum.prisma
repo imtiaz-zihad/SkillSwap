@@ -1,0 +1,32 @@
+enum UserRole {
+  LEARNER
+  INSTRUCTOR
+  ADMIN
+}
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  DELETED
+}
+
+enum IssueStatus {
+  OPEN
+  IN_SESSION
+  SOLVED
+  NOT_SOLVED
+}
+
+enum SessionStatus {
+  ONGOING
+  ENDED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+enum ReviewTarget {
+  LEARNER
+  INSTRUCTOR
+}
