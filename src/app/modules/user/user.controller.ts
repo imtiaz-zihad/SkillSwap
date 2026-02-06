@@ -37,8 +37,23 @@ const createAdmin = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+
+const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
+  const { page, limit } = req.query;
+  const result = await UserService.getAllFromDB({
+    page: Number(page),
+    limit: Number(limit),
+  });
+  sendResponse(res, {
+    statusCode: 201,
+    success: true,
+    message: "User Retrive successfully!",
+    data: result,
+  });
+});
 export const UserController = {
   createLearner,
   createInstructor,
   createAdmin,
+  getAllFromDB,
 };

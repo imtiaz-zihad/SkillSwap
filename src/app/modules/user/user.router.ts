@@ -2,7 +2,15 @@ import { fileUploader } from "../../helper/fileUploder";
 import { UserController } from "./user.controller";
 import express, { NextFunction, Request, Response } from "express";
 import { UserValidation } from "./user.validation";
+import { UserRole } from "../../generated/prisma/enums";
+import auth from "../../middlewares/auth";
+
+
 const router = express.Router();
+
+
+
+router.get("/", auth(UserRole.ADMIN), UserController.getAllFromDB);
 
 router.post(
   "/create-learner",
