@@ -1,1 +1,1 @@
-# SkillEx -> The microservice exchange platform
+# SkillSwap -> The microservice exchange platform
