@@ -89,13 +89,25 @@ const getAllFromDB = async ({
   limit: number;
 }) => {
   const skip = (page - 1) * limit;
+
   const result = await prisma.user.findMany({
     skip,
     take: limit,
+    select: {
+      id: true,
+      email: true,
+      role: true,
+      coins: true,
+      status: true,
+      needPasswordChange: true,
+      createdAt: true,
+      updatedAt: true,
+    },
   });
 
   return result;
 };
+
 export const UserService = {
   createLearner,
   createInstructor,
