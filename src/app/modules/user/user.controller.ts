@@ -5,7 +5,7 @@ import { UserService } from "./user.service";
 import { log } from "console";
 
 const createLearner = catchAsync(async (req: Request, res: Response) => {
-    console.log(req);
+    console.log(req.body);
   const result = await UserService.createLearner(req);
   
   console.log(result);
