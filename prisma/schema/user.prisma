@@ -45,7 +45,10 @@ model Instructor {
     createdAt     DateTime @default(now())
     updatedAt     DateTime @updatedAt
 
-    user User @relation(fields: [email], references: [email])
+    user         User             @relation(fields: [email], references: [email])
+    applications Application[]
+    sessions     ProblemSession[]
+    reviews      Review[]
 
     @@map("instructors")
 }
@@ -61,7 +64,10 @@ model Learner {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    user User @relation(fields: [email], references: [email])
+    user     User             @relation(fields: [email], references: [email])
+    problems ProblemPost[]
+    sessions ProblemSession[]
+    reviews  Review[]
 
     @@map("learners")
 }

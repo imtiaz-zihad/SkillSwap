@@ -9,24 +9,33 @@ enum UserStatus {
   DELETED
 }
 
-enum IssueStatus {
+enum ProblemStatus {
   OPEN
-  IN_SESSION
-  SOLVED
-  NOT_SOLVED
+  LOCKED
+  COMPLETED
+  CANCELLED
+}
+
+enum ApplicationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
 }
 
 enum SessionStatus {
+  SCHEDULED
   ONGOING
-  ENDED
+  COMPLETED
+  DISPUTED
 }
 
-enum PaymentStatus {
+
+enum SolveStatus {
+  SOLVED
+  NOT_SOLVED
+}
+enum TransactionStatus {
   PENDING
   SUCCESS
   FAILED
-}
-enum ReviewTarget {
-  LEARNER
-  INSTRUCTOR
 }
