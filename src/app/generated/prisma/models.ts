@@ -8,6 +8,11 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/ProblemPost'
+export type * from './models/Application'
+export type * from './models/ProblemSession'
+export type * from './models/CoinTransaction'
+export type * from './models/Review'
 export type * from './models/User'
 export type * from './models/Admin'
 export type * from './models/Instructor'

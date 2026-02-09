@@ -277,6 +277,9 @@ export type InstructorWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Instructor"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Instructor"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  applications?: Prisma.ApplicationListRelationFilter
+  sessions?: Prisma.ProblemSessionListRelationFilter
+  reviews?: Prisma.ReviewListRelationFilter
 }
 
 export type InstructorOrderByWithRelationInput = {
@@ -293,6 +296,9 @@ export type InstructorOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  applications?: Prisma.ApplicationOrderByRelationAggregateInput
+  sessions?: Prisma.ProblemSessionOrderByRelationAggregateInput
+  reviews?: Prisma.ReviewOrderByRelationAggregateInput
 }
 
 export type InstructorWhereUniqueInput = Prisma.AtLeast<{
@@ -312,6 +318,9 @@ export type InstructorWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Instructor"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Instructor"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  applications?: Prisma.ApplicationListRelationFilter
+  sessions?: Prisma.ProblemSessionListRelationFilter
+  reviews?: Prisma.ReviewListRelationFilter
 }, "id" | "email">
 
 export type InstructorOrderByWithAggregationInput = {
@@ -365,6 +374,9 @@ export type InstructorCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutInstructorInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutInstructorInput
+  sessions?: Prisma.ProblemSessionCreateNestedManyWithoutInstructorInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutInstructorInput
 }
 
 export type InstructorUncheckedCreateInput = {
@@ -380,6 +392,9 @@ export type InstructorUncheckedCreateInput = {
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutInstructorInput
+  sessions?: Prisma.ProblemSessionUncheckedCreateNestedManyWithoutInstructorInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutInstructorInput
 }
 
 export type InstructorUpdateInput = {
@@ -395,6 +410,9 @@ export type InstructorUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutInstructorNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutInstructorNestedInput
+  sessions?: Prisma.ProblemSessionUpdateManyWithoutInstructorNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutInstructorNestedInput
 }
 
 export type InstructorUncheckedUpdateInput = {
@@ -410,6 +428,9 @@ export type InstructorUncheckedUpdateInput = {
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutInstructorNestedInput
+  sessions?: Prisma.ProblemSessionUncheckedUpdateManyWithoutInstructorNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutInstructorNestedInput
 }
 
 export type InstructorCreateManyInput = {
@@ -454,6 +475,11 @@ export type InstructorUncheckedUpdateManyInput = {
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type InstructorScalarRelationFilter = {
+  is?: Prisma.InstructorWhereInput
+  isNot?: Prisma.InstructorWhereInput
 }
 
 export type InstructorNullableScalarRelationFilter = {
@@ -516,6 +542,48 @@ export type InstructorSumOrderByAggregateInput = {
   averageRating?: Prisma.SortOrder
 }
 
+export type InstructorCreateNestedOneWithoutApplicationsInput = {
+  create?: Prisma.XOR<Prisma.InstructorCreateWithoutApplicationsInput, Prisma.InstructorUncheckedCreateWithoutApplicationsInput>
+  connectOrCreate?: Prisma.InstructorCreateOrConnectWithoutApplicationsInput
+  connect?: Prisma.InstructorWhereUniqueInput
+}
+
+export type InstructorUpdateOneRequiredWithoutApplicationsNestedInput = {
+  create?: Prisma.XOR<Prisma.InstructorCreateWithoutApplicationsInput, Prisma.InstructorUncheckedCreateWithoutApplicationsInput>
+  connectOrCreate?: Prisma.InstructorCreateOrConnectWithoutApplicationsInput
+  upsert?: Prisma.InstructorUpsertWithoutApplicationsInput
+  connect?: Prisma.InstructorWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.InstructorUpdateToOneWithWhereWithoutApplicationsInput, Prisma.InstructorUpdateWithoutApplicationsInput>, Prisma.InstructorUncheckedUpdateWithoutApplicationsInput>
+}
+
+export type InstructorCreateNestedOneWithoutSessionsInput = {
+  create?: Prisma.XOR<Prisma.InstructorCreateWithoutSessionsInput, Prisma.InstructorUncheckedCreateWithoutSessionsInput>
+  connectOrCreate?: Prisma.InstructorCreateOrConnectWithoutSessionsInput
+  connect?: Prisma.InstructorWhereUniqueInput
+}
+
+export type InstructorUpdateOneRequiredWithoutSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.InstructorCreateWithoutSessionsInput, Prisma.InstructorUncheckedCreateWithoutSessionsInput>
+  connectOrCreate?: Prisma.InstructorCreateOrConnectWithoutSessionsInput
+  upsert?: Prisma.InstructorUpsertWithoutSessionsInput
+  connect?: Prisma.InstructorWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.InstructorUpdateToOneWithWhereWithoutSessionsInput, Prisma.InstructorUpdateWithoutSessionsInput>, Prisma.InstructorUncheckedUpdateWithoutSessionsInput>
+}
+
+export type InstructorCreateNestedOneWithoutReviewsInput = {
+  create?: Prisma.XOR<Prisma.InstructorCreateWithoutReviewsInput, Prisma.InstructorUncheckedCreateWithoutReviewsInput>
+  connectOrCreate?: Prisma.InstructorCreateOrConnectWithoutReviewsInput
+  connect?: Prisma.InstructorWhereUniqueInput
+}
+
+export type InstructorUpdateOneRequiredWithoutReviewsNestedInput = {
+  create?: Prisma.XOR<Prisma.InstructorCreateWithoutReviewsInput, Prisma.InstructorUncheckedCreateWithoutReviewsInput>
+  connectOrCreate?: Prisma.InstructorCreateOrConnectWithoutReviewsInput
+  upsert?: Prisma.InstructorUpsertWithoutReviewsInput
+  connect?: Prisma.InstructorWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.InstructorUpdateToOneWithWhereWithoutReviewsInput, Prisma.InstructorUpdateWithoutReviewsInput>, Prisma.InstructorUncheckedUpdateWithoutReviewsInput>
+}
+
 export type InstructorCreateNestedOneWithoutUserInput = {
   create?: Prisma.XOR<Prisma.InstructorCreateWithoutUserInput, Prisma.InstructorUncheckedCreateWithoutUserInput>
   connectOrCreate?: Prisma.InstructorCreateOrConnectWithoutUserInput
@@ -556,6 +624,258 @@ export type FloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type InstructorCreateWithoutApplicationsInput = {
+  id?: string
+  name: string
+  profilePhoto?: string | null
+  contactNumber: string
+  bio?: string | null
+  skills: string
+  experience?: number
+  averageRating?: number
+  isDeleted?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutInstructorInput
+  sessions?: Prisma.ProblemSessionCreateNestedManyWithoutInstructorInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutInstructorInput
+}
+
+export type InstructorUncheckedCreateWithoutApplicationsInput = {
+  id?: string
+  name: string
+  email: string
+  profilePhoto?: string | null
+  contactNumber: string
+  bio?: string | null
+  skills: string
+  experience?: number
+  averageRating?: number
+  isDeleted?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.ProblemSessionUncheckedCreateNestedManyWithoutInstructorInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutInstructorInput
+}
+
+export type InstructorCreateOrConnectWithoutApplicationsInput = {
+  where: Prisma.InstructorWhereUniqueInput
+  create: Prisma.XOR<Prisma.InstructorCreateWithoutApplicationsInput, Prisma.InstructorUncheckedCreateWithoutApplicationsInput>
+}
+
+export type InstructorUpsertWithoutApplicationsInput = {
+  update: Prisma.XOR<Prisma.InstructorUpdateWithoutApplicationsInput, Prisma.InstructorUncheckedUpdateWithoutApplicationsInput>
+  create: Prisma.XOR<Prisma.InstructorCreateWithoutApplicationsInput, Prisma.InstructorUncheckedCreateWithoutApplicationsInput>
+  where?: Prisma.InstructorWhereInput
+}
+
+export type InstructorUpdateToOneWithWhereWithoutApplicationsInput = {
+  where?: Prisma.InstructorWhereInput
+  data: Prisma.XOR<Prisma.InstructorUpdateWithoutApplicationsInput, Prisma.InstructorUncheckedUpdateWithoutApplicationsInput>
+}
+
+export type InstructorUpdateWithoutApplicationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skills?: Prisma.StringFieldUpdateOperationsInput | string
+  experience?: Prisma.IntFieldUpdateOperationsInput | number
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutInstructorNestedInput
+  sessions?: Prisma.ProblemSessionUpdateManyWithoutInstructorNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutInstructorNestedInput
+}
+
+export type InstructorUncheckedUpdateWithoutApplicationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skills?: Prisma.StringFieldUpdateOperationsInput | string
+  experience?: Prisma.IntFieldUpdateOperationsInput | number
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.ProblemSessionUncheckedUpdateManyWithoutInstructorNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutInstructorNestedInput
+}
+
+export type InstructorCreateWithoutSessionsInput = {
+  id?: string
+  name: string
+  profilePhoto?: string | null
+  contactNumber: string
+  bio?: string | null
+  skills: string
+  experience?: number
+  averageRating?: number
+  isDeleted?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutInstructorInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutInstructorInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutInstructorInput
+}
+
+export type InstructorUncheckedCreateWithoutSessionsInput = {
+  id?: string
+  name: string
+  email: string
+  profilePhoto?: string | null
+  contactNumber: string
+  bio?: string | null
+  skills: string
+  experience?: number
+  averageRating?: number
+  isDeleted?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutInstructorInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutInstructorInput
+}
+
+export type InstructorCreateOrConnectWithoutSessionsInput = {
+  where: Prisma.InstructorWhereUniqueInput
+  create: Prisma.XOR<Prisma.InstructorCreateWithoutSessionsInput, Prisma.InstructorUncheckedCreateWithoutSessionsInput>
+}
+
+export type InstructorUpsertWithoutSessionsInput = {
+  update: Prisma.XOR<Prisma.InstructorUpdateWithoutSessionsInput, Prisma.InstructorUncheckedUpdateWithoutSessionsInput>
+  create: Prisma.XOR<Prisma.InstructorCreateWithoutSessionsInput, Prisma.InstructorUncheckedCreateWithoutSessionsInput>
+  where?: Prisma.InstructorWhereInput
+}
+
+export type InstructorUpdateToOneWithWhereWithoutSessionsInput = {
+  where?: Prisma.InstructorWhereInput
+  data: Prisma.XOR<Prisma.InstructorUpdateWithoutSessionsInput, Prisma.InstructorUncheckedUpdateWithoutSessionsInput>
+}
+
+export type InstructorUpdateWithoutSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skills?: Prisma.StringFieldUpdateOperationsInput | string
+  experience?: Prisma.IntFieldUpdateOperationsInput | number
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutInstructorNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutInstructorNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutInstructorNestedInput
+}
+
+export type InstructorUncheckedUpdateWithoutSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skills?: Prisma.StringFieldUpdateOperationsInput | string
+  experience?: Prisma.IntFieldUpdateOperationsInput | number
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutInstructorNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutInstructorNestedInput
+}
+
+export type InstructorCreateWithoutReviewsInput = {
+  id?: string
+  name: string
+  profilePhoto?: string | null
+  contactNumber: string
+  bio?: string | null
+  skills: string
+  experience?: number
+  averageRating?: number
+  isDeleted?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutInstructorInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutInstructorInput
+  sessions?: Prisma.ProblemSessionCreateNestedManyWithoutInstructorInput
+}
+
+export type InstructorUncheckedCreateWithoutReviewsInput = {
+  id?: string
+  name: string
+  email: string
+  profilePhoto?: string | null
+  contactNumber: string
+  bio?: string | null
+  skills: string
+  experience?: number
+  averageRating?: number
+  isDeleted?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutInstructorInput
+  sessions?: Prisma.ProblemSessionUncheckedCreateNestedManyWithoutInstructorInput
+}
+
+export type InstructorCreateOrConnectWithoutReviewsInput = {
+  where: Prisma.InstructorWhereUniqueInput
+  create: Prisma.XOR<Prisma.InstructorCreateWithoutReviewsInput, Prisma.InstructorUncheckedCreateWithoutReviewsInput>
+}
+
+export type InstructorUpsertWithoutReviewsInput = {
+  update: Prisma.XOR<Prisma.InstructorUpdateWithoutReviewsInput, Prisma.InstructorUncheckedUpdateWithoutReviewsInput>
+  create: Prisma.XOR<Prisma.InstructorCreateWithoutReviewsInput, Prisma.InstructorUncheckedCreateWithoutReviewsInput>
+  where?: Prisma.InstructorWhereInput
+}
+
+export type InstructorUpdateToOneWithWhereWithoutReviewsInput = {
+  where?: Prisma.InstructorWhereInput
+  data: Prisma.XOR<Prisma.InstructorUpdateWithoutReviewsInput, Prisma.InstructorUncheckedUpdateWithoutReviewsInput>
+}
+
+export type InstructorUpdateWithoutReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skills?: Prisma.StringFieldUpdateOperationsInput | string
+  experience?: Prisma.IntFieldUpdateOperationsInput | number
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutInstructorNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutInstructorNestedInput
+  sessions?: Prisma.ProblemSessionUpdateManyWithoutInstructorNestedInput
+}
+
+export type InstructorUncheckedUpdateWithoutReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skills?: Prisma.StringFieldUpdateOperationsInput | string
+  experience?: Prisma.IntFieldUpdateOperationsInput | number
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutInstructorNestedInput
+  sessions?: Prisma.ProblemSessionUncheckedUpdateManyWithoutInstructorNestedInput
+}
+
 export type InstructorCreateWithoutUserInput = {
   id?: string
   name: string
@@ -568,6 +888,9 @@ export type InstructorCreateWithoutUserInput = {
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  applications?: Prisma.ApplicationCreateNestedManyWithoutInstructorInput
+  sessions?: Prisma.ProblemSessionCreateNestedManyWithoutInstructorInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutInstructorInput
 }
 
 export type InstructorUncheckedCreateWithoutUserInput = {
@@ -582,6 +905,9 @@ export type InstructorUncheckedCreateWithoutUserInput = {
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutInstructorInput
+  sessions?: Prisma.ProblemSessionUncheckedCreateNestedManyWithoutInstructorInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutInstructorInput
 }
 
 export type InstructorCreateOrConnectWithoutUserInput = {
@@ -612,6 +938,9 @@ export type InstructorUpdateWithoutUserInput = {
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  applications?: Prisma.ApplicationUpdateManyWithoutInstructorNestedInput
+  sessions?: Prisma.ProblemSessionUpdateManyWithoutInstructorNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutInstructorNestedInput
 }
 
 export type InstructorUncheckedUpdateWithoutUserInput = {
@@ -626,8 +955,58 @@ export type InstructorUncheckedUpdateWithoutUserInput = {
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutInstructorNestedInput
+  sessions?: Prisma.ProblemSessionUncheckedUpdateManyWithoutInstructorNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutInstructorNestedInput
 }
 
+
+/**
+ * Count Type InstructorCountOutputType
+ */
+
+export type InstructorCountOutputType = {
+  applications: number
+  sessions: number
+  reviews: number
+}
+
+export type InstructorCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  applications?: boolean | InstructorCountOutputTypeCountApplicationsArgs
+  sessions?: boolean | InstructorCountOutputTypeCountSessionsArgs
+  reviews?: boolean | InstructorCountOutputTypeCountReviewsArgs
+}
+
+/**
+ * InstructorCountOutputType without action
+ */
+export type InstructorCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InstructorCountOutputType
+   */
+  select?: Prisma.InstructorCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * InstructorCountOutputType without action
+ */
+export type InstructorCountOutputTypeCountApplicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ApplicationWhereInput
+}
+
+/**
+ * InstructorCountOutputType without action
+ */
+export type InstructorCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProblemSessionWhereInput
+}
+
+/**
+ * InstructorCountOutputType without action
+ */
+export type InstructorCountOutputTypeCountReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReviewWhereInput
+}
 
 
 export type InstructorSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -644,6 +1023,10 @@ export type InstructorSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  applications?: boolean | Prisma.Instructor$applicationsArgs<ExtArgs>
+  sessions?: boolean | Prisma.Instructor$sessionsArgs<ExtArgs>
+  reviews?: boolean | Prisma.Instructor$reviewsArgs<ExtArgs>
+  _count?: boolean | Prisma.InstructorCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["instructor"]>
 
 export type InstructorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -696,6 +1079,10 @@ export type InstructorSelectScalar = {
 export type InstructorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "profilePhoto" | "contactNumber" | "bio" | "skills" | "experience" | "averageRating" | "isDeleted" | "createdAt" | "updatedAt", ExtArgs["result"]["instructor"]>
 export type InstructorInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  applications?: boolean | Prisma.Instructor$applicationsArgs<ExtArgs>
+  sessions?: boolean | Prisma.Instructor$sessionsArgs<ExtArgs>
+  reviews?: boolean | Prisma.Instructor$reviewsArgs<ExtArgs>
+  _count?: boolean | Prisma.InstructorCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type InstructorIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -708,6 +1095,9 @@ export type $InstructorPayload<ExtArgs extends runtime.Types.Extensions.Internal
   name: "Instructor"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    applications: Prisma.$ApplicationPayload<ExtArgs>[]
+    sessions: Prisma.$ProblemSessionPayload<ExtArgs>[]
+    reviews: Prisma.$ReviewPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1117,6 +1507,9 @@ readonly fields: InstructorFieldRefs;
 export interface Prisma__InstructorClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  applications<T extends Prisma.Instructor$applicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Instructor$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sessions<T extends Prisma.Instructor$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Instructor$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProblemSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reviews<T extends Prisma.Instructor$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Instructor$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1551,6 +1944,78 @@ export type InstructorDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many Instructors to delete.
    */
   limit?: number
+}
+
+/**
+ * Instructor.applications
+ */
+export type Instructor$applicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Application
+   */
+  select?: Prisma.ApplicationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Application
+   */
+  omit?: Prisma.ApplicationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ApplicationInclude<ExtArgs> | null
+  where?: Prisma.ApplicationWhereInput
+  orderBy?: Prisma.ApplicationOrderByWithRelationInput | Prisma.ApplicationOrderByWithRelationInput[]
+  cursor?: Prisma.ApplicationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ApplicationScalarFieldEnum | Prisma.ApplicationScalarFieldEnum[]
+}
+
+/**
+ * Instructor.sessions
+ */
+export type Instructor$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProblemSession
+   */
+  select?: Prisma.ProblemSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProblemSession
+   */
+  omit?: Prisma.ProblemSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProblemSessionInclude<ExtArgs> | null
+  where?: Prisma.ProblemSessionWhereInput
+  orderBy?: Prisma.ProblemSessionOrderByWithRelationInput | Prisma.ProblemSessionOrderByWithRelationInput[]
+  cursor?: Prisma.ProblemSessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProblemSessionScalarFieldEnum | Prisma.ProblemSessionScalarFieldEnum[]
+}
+
+/**
+ * Instructor.reviews
+ */
+export type Instructor$reviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Review
+   */
+  select?: Prisma.ReviewSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Review
+   */
+  omit?: Prisma.ReviewOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewInclude<ExtArgs> | null
+  where?: Prisma.ReviewWhereInput
+  orderBy?: Prisma.ReviewOrderByWithRelationInput | Prisma.ReviewOrderByWithRelationInput[]
+  cursor?: Prisma.ReviewWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReviewScalarFieldEnum | Prisma.ReviewScalarFieldEnum[]
 }
 
 /**

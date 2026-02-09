@@ -51,6 +51,11 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  ProblemPost: 'ProblemPost',
+  Application: 'Application',
+  ProblemSession: 'ProblemSession',
+  CoinTransaction: 'CoinTransaction',
+  Review: 'Review',
   User: 'User',
   Admin: 'Admin',
   Instructor: 'Instructor',
@@ -71,6 +76,81 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const ProblemPostScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  image: 'image',
+  requiredSkill: 'requiredSkill',
+  coinReward: 'coinReward',
+  status: 'status',
+  learnerId: 'learnerId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProblemPostScalarFieldEnum = (typeof ProblemPostScalarFieldEnum)[keyof typeof ProblemPostScalarFieldEnum]
+
+
+export const ApplicationScalarFieldEnum = {
+  id: 'id',
+  problemId: 'problemId',
+  instructorId: 'instructorId',
+  note: 'note',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
+
+
+export const ProblemSessionScalarFieldEnum = {
+  id: 'id',
+  problemId: 'problemId',
+  learnerId: 'learnerId',
+  instructorId: 'instructorId',
+  videoCallId: 'videoCallId',
+  status: 'status',
+  startedAt: 'startedAt',
+  endedAt: 'endedAt',
+  learnerSolveStatus: 'learnerSolveStatus',
+  instructorMarkedCompleted: 'instructorMarkedCompleted',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProblemSessionScalarFieldEnum = (typeof ProblemSessionScalarFieldEnum)[keyof typeof ProblemSessionScalarFieldEnum]
+
+
+export const CoinTransactionScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  fromUserId: 'fromUserId',
+  toUserId: 'toUserId',
+  amount: 'amount',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CoinTransactionScalarFieldEnum = (typeof CoinTransactionScalarFieldEnum)[keyof typeof CoinTransactionScalarFieldEnum]
+
+
+export const ReviewScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  learnerId: 'learnerId',
+  instructorId: 'instructorId',
+  rating: 'rating',
+  comment: 'comment',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {
