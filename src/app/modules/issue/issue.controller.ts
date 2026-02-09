@@ -29,45 +29,48 @@ const createIssue = catchAsync(
   },
 );
 
-// const getOpenIssues = catchAsync(async (_req: Request, res: Response) => {
-//   const result = await IssueService.getOpenIssues();
+const getOpenIssues = catchAsync(async (_req: Request, res: Response) => {
+  const result = await IssueService.getOpenIssues();
 
-//   sendResponse(res, {
-//     statusCode: 200,
-//     success: true,
-//     message: "Open issues retrieved successfully!",
-//     data: result,
-//   });
-// });
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Open issues retrieved successfully!",
+    data: result,
+  });
+});
 
-// const getMyIssues = catchAsync(async (req: Request, res: Response) => {
+const getMyIssues = catchAsync(
+  async (req: Request & { user?: IJWTPayload }, res: Response) => {
+    const user = req.user as IJWTPayload;
 
-//   const result = await IssueService.getMyIssues(req.user.learnerId);
+    const result = await IssueService.getMyIssues(user.email);
 
-//   sendResponse(res, {
-//     statusCode: 200,
-//     success: true,
-//     message: "My issues retrieved successfully!",
-//     data: result,
-//   });
-// });
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "My issues retrieved successfully!",
+      data: result,
+    });
+  },
+);
 
-// const getSingleIssue = catchAsync(async (req: Request, res: Response) => {
-//   const { id } = req.params;
+const getSingleIssue = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
 
-//   const result = await IssueService.getSingleIssue(id);
+  const result = await IssueService.getSingleIssue(id as string);
 
-//   sendResponse(res, {
-//     statusCode: 200,
-//     success: true,
-//     message: "Issue retrieved successfully!",
-//     data: result,
-//   });
-// });
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Issue retrieved successfully!",
+    data: result,
+  });
+});
 
 export const IssueController = {
   createIssue,
-  //   getOpenIssues,
-  //   getMyIssues,
-  //   getSingleIssue,
+  getOpenIssues,
+  getMyIssues,
+  getSingleIssue,
 };

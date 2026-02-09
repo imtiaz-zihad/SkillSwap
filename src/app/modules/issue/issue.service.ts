@@ -65,47 +65,76 @@ const createIssue = async (user: IJWTPayload, payload: CreateIssuePayload) => {
   return result;
 };
 
-// const getOpenIssues = async () => {
-//   return prisma.issue.findMany({
-//     where: { status: "OPEN" },
-//     include: {
-//       learner: {
-//         select: {
-//           id: true,
-//           name: true,
-//           profilePhoto: true,
-//         },
-//       },
-//     },
-//     orderBy: { createdAt: "desc" },
-//   });
-// };
+const getOpenIssues = async () => {
+  return prisma.problemPost.findMany({
+    where: { status: "OPEN" },
+    include: {
+      learner: {
+        select: {
+          id: true,
+          name: true,
+          profilePhoto: true,
+        },
+      },
+    },
+    orderBy: { createdAt: "desc" },
+  });
+};
 
-// const getMyIssues = async (learnerId: string) => {
-//   return prisma.issue.findMany({
-//     where: { learnerId },
-//     orderBy: { createdAt: "desc" },
-//   });
-// };
+const getMyIssues = async (learnerEmail: string) => {
+  const learner = await prisma.learner.findUnique({
+    where: { email: learnerEmail },
+  });
 
-// const getSingleIssue = async (id: string) => {
-//   return prisma.issue.findUnique({
-//     where: { id },
-//     include: {
-//       learner: {
-//         select: {
-//           id: true,
-//           name: true,
-//           profilePhoto: true,
-//         },
-//       },
-//     },
-//   });
-// };
+  if (!learner) {
+    throw new Error("Learner profile not found");
+  }
+
+  const result = await prisma.problemPost.findMany({
+    where: {
+      learnerId: learner.id,
+    },
+    include: {
+      learner: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return result;
+};
+
+const getSingleIssue = async (id: string) => {
+  const result = await prisma.problemPost.findUnique({
+    where: { id },
+    include: {
+      learner: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
+    },
+  });
+
+  if (!result) {
+    throw new Error("Issue not found");
+  }
+
+  return result;
+};
 
 export const IssueService = {
   createIssue,
-  //   getOpenIssues,
-  //   getMyIssues,
-  //   getSingleIssue,
+  getOpenIssues,
+  getMyIssues,
+  getSingleIssue,
 };

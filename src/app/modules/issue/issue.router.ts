@@ -1,3 +1,4 @@
+import { Admin } from './../../generated/prisma/browser';
 import express, { NextFunction, Request, Response } from "express";
 import { IssueController } from "./issue.controller";
 import { IssueValidation } from "./issue.validation";
@@ -19,10 +20,10 @@ router.post(
   },
 );
 
-// router.get("/", auth(UserRole.INSTRUCTOR), IssueController.getOpenIssues);
+router.get("/open-issue", IssueController.getOpenIssues);
 
-// router.get("/my", auth(UserRole.LEARNER), IssueController.getMyIssues);
+router.get("/my-issue", auth(UserRole.LEARNER), IssueController.getMyIssues);
 
-// router.get("/:id", auth(), IssueController.getSingleIssue);
+ router.get("/issue/:id", auth(), IssueController.getSingleIssue);
 
 export const IssueRouter = router;
