@@ -24,6 +24,7 @@ model Application {
     instructorId String
     note         String
     status       ApplicationStatus @default(PENDING)
+    
 
     problem    ProblemPost @relation(fields: [problemId], references: [id])
     instructor Instructor  @relation(fields: [instructorId], references: [id])
