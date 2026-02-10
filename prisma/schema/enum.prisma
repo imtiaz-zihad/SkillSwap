@@ -24,10 +24,11 @@ enum ApplicationStatus {
 
 enum SessionStatus {
   SCHEDULED
-  ONGOING
+  PENDING
   COMPLETED
-  DISPUTED
+  FAILED
 }
+
 
 
 enum SolveStatus {

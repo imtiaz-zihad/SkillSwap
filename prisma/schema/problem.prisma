@@ -44,7 +44,7 @@ model ProblemSession {
     videoCallId  String
 
     status    SessionStatus @default(SCHEDULED)
-    startedAt DateTime?
+    startedAt DateTime @default(now())
     endedAt   DateTime?
 
     learnerSolveStatus        SolveStatus?

@@ -48,9 +48,9 @@ export type ApplicationStatus = (typeof ApplicationStatus)[keyof typeof Applicat
 
 export const SessionStatus = {
   SCHEDULED: 'SCHEDULED',
-  ONGOING: 'ONGOING',
+  PENDING: 'PENDING',
   COMPLETED: 'COMPLETED',
-  DISPUTED: 'DISPUTED'
+  FAILED: 'FAILED'
 } as const
 
 export type SessionStatus = (typeof SessionStatus)[keyof typeof SessionStatus]

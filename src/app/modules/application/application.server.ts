@@ -3,6 +3,7 @@ import { IJWTPayload } from "../../types/common";
 import ApiError from "../../errors/ApiError";
 import httpStatus from "http-status";
 import { v4 as uuidv4 } from "uuid";
+import { SessionStatus } from "../../generated/prisma/enums";
 
 const createApplication = async (
   user: IJWTPayload,
@@ -48,8 +49,6 @@ const createApplication = async (
 };
 
 const acceptApplication = async (applicationId: string, user: IJWTPayload) => {
-
-
   // 1. Find application with problem & instructor
   const application = await prisma.application.findUnique({
     where: { id: applicationId },
@@ -66,8 +65,7 @@ const acceptApplication = async (applicationId: string, user: IJWTPayload) => {
   const problem = application.problem;
   const instructor = application.instructor;
 
-  if (!problem) 
-    throw new ApiError(httpStatus.NOT_FOUND, "Problem not found");
+  if (!problem) throw new ApiError(httpStatus.NOT_FOUND, "Problem not found");
   if (!instructor)
     throw new ApiError(httpStatus.NOT_FOUND, "Instructor not found");
 
@@ -90,7 +88,8 @@ const acceptApplication = async (applicationId: string, user: IJWTPayload) => {
       problemId: problem.id,
       learnerId: learner.id,
       instructorId: instructor.id,
-      status: "ONGOING",
+      status: SessionStatus.PENDING,
+      startedAt:new Date(),
       videoCallId: uuidv4(),
     },
   });
