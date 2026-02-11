@@ -24,7 +24,6 @@ model Application {
     instructorId String
     note         String
     status       ApplicationStatus @default(PENDING)
-    
 
     problem    ProblemPost @relation(fields: [problemId], references: [id])
     instructor Instructor  @relation(fields: [instructorId], references: [id])
@@ -44,7 +43,7 @@ model ProblemSession {
     videoCallId  String
 
     status    SessionStatus @default(SCHEDULED)
-    startedAt DateTime @default(now())
+    startedAt DateTime      @default(now())
     endedAt   DateTime?
 
     learnerSolveStatus        SolveStatus?
@@ -55,7 +54,7 @@ model ProblemSession {
     instructor Instructor  @relation(fields: [instructorId], references: [id])
 
     coinTransaction CoinTransaction?
-    review          Review?
+    review          Review[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -80,9 +79,16 @@ model CoinTransaction {
 }
 
 model Review {
-    id        String         @id @default(uuid())
-    sessionId String         @unique
+    id        String   @id @default(uuid())
+    rating    Int
+    comment   String?
+    createdAt DateTime @default(now())
+
+    sessionId String
     session   ProblemSession @relation(fields: [sessionId], references: [id])
+
+    reviewerId   String
+    reviewerRole UserRole
 
     learnerId String
     learner   Learner @relation(fields: [learnerId], references: [id])
@@ -90,11 +96,6 @@ model Review {
     instructorId String
     instructor   Instructor @relation(fields: [instructorId], references: [id])
 
-    rating  Int
-    comment String?
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
+    @@unique([sessionId, reviewerId])
     @@map("reviews")
 }

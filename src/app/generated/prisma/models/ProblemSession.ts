@@ -196,7 +196,7 @@ export type ProblemSessionGroupByOutputType = {
   instructorId: string
   videoCallId: string
   status: $Enums.SessionStatus
-  startedAt: Date | null
+  startedAt: Date
   endedAt: Date | null
   learnerSolveStatus: $Enums.SolveStatus | null
   instructorMarkedCompleted: boolean
@@ -232,7 +232,7 @@ export type ProblemSessionWhereInput = {
   instructorId?: Prisma.StringFilter<"ProblemSession"> | string
   videoCallId?: Prisma.StringFilter<"ProblemSession"> | string
   status?: Prisma.EnumSessionStatusFilter<"ProblemSession"> | $Enums.SessionStatus
-  startedAt?: Prisma.DateTimeNullableFilter<"ProblemSession"> | Date | string | null
+  startedAt?: Prisma.DateTimeFilter<"ProblemSession"> | Date | string
   endedAt?: Prisma.DateTimeNullableFilter<"ProblemSession"> | Date | string | null
   learnerSolveStatus?: Prisma.EnumSolveStatusNullableFilter<"ProblemSession"> | $Enums.SolveStatus | null
   instructorMarkedCompleted?: Prisma.BoolFilter<"ProblemSession"> | boolean
@@ -242,7 +242,7 @@ export type ProblemSessionWhereInput = {
   learner?: Prisma.XOR<Prisma.LearnerScalarRelationFilter, Prisma.LearnerWhereInput>
   instructor?: Prisma.XOR<Prisma.InstructorScalarRelationFilter, Prisma.InstructorWhereInput>
   coinTransaction?: Prisma.XOR<Prisma.CoinTransactionNullableScalarRelationFilter, Prisma.CoinTransactionWhereInput> | null
-  review?: Prisma.XOR<Prisma.ReviewNullableScalarRelationFilter, Prisma.ReviewWhereInput> | null
+  review?: Prisma.ReviewListRelationFilter
 }
 
 export type ProblemSessionOrderByWithRelationInput = {
@@ -252,7 +252,7 @@ export type ProblemSessionOrderByWithRelationInput = {
   instructorId?: Prisma.SortOrder
   videoCallId?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  startedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  startedAt?: Prisma.SortOrder
   endedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   learnerSolveStatus?: Prisma.SortOrderInput | Prisma.SortOrder
   instructorMarkedCompleted?: Prisma.SortOrder
@@ -262,7 +262,7 @@ export type ProblemSessionOrderByWithRelationInput = {
   learner?: Prisma.LearnerOrderByWithRelationInput
   instructor?: Prisma.InstructorOrderByWithRelationInput
   coinTransaction?: Prisma.CoinTransactionOrderByWithRelationInput
-  review?: Prisma.ReviewOrderByWithRelationInput
+  review?: Prisma.ReviewOrderByRelationAggregateInput
 }
 
 export type ProblemSessionWhereUniqueInput = Prisma.AtLeast<{
@@ -275,7 +275,7 @@ export type ProblemSessionWhereUniqueInput = Prisma.AtLeast<{
   instructorId?: Prisma.StringFilter<"ProblemSession"> | string
   videoCallId?: Prisma.StringFilter<"ProblemSession"> | string
   status?: Prisma.EnumSessionStatusFilter<"ProblemSession"> | $Enums.SessionStatus
-  startedAt?: Prisma.DateTimeNullableFilter<"ProblemSession"> | Date | string | null
+  startedAt?: Prisma.DateTimeFilter<"ProblemSession"> | Date | string
   endedAt?: Prisma.DateTimeNullableFilter<"ProblemSession"> | Date | string | null
   learnerSolveStatus?: Prisma.EnumSolveStatusNullableFilter<"ProblemSession"> | $Enums.SolveStatus | null
   instructorMarkedCompleted?: Prisma.BoolFilter<"ProblemSession"> | boolean
@@ -285,7 +285,7 @@ export type ProblemSessionWhereUniqueInput = Prisma.AtLeast<{
   learner?: Prisma.XOR<Prisma.LearnerScalarRelationFilter, Prisma.LearnerWhereInput>
   instructor?: Prisma.XOR<Prisma.InstructorScalarRelationFilter, Prisma.InstructorWhereInput>
   coinTransaction?: Prisma.XOR<Prisma.CoinTransactionNullableScalarRelationFilter, Prisma.CoinTransactionWhereInput> | null
-  review?: Prisma.XOR<Prisma.ReviewNullableScalarRelationFilter, Prisma.ReviewWhereInput> | null
+  review?: Prisma.ReviewListRelationFilter
 }, "id" | "problemId">
 
 export type ProblemSessionOrderByWithAggregationInput = {
@@ -295,7 +295,7 @@ export type ProblemSessionOrderByWithAggregationInput = {
   instructorId?: Prisma.SortOrder
   videoCallId?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  startedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  startedAt?: Prisma.SortOrder
   endedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   learnerSolveStatus?: Prisma.SortOrderInput | Prisma.SortOrder
   instructorMarkedCompleted?: Prisma.SortOrder
@@ -316,7 +316,7 @@ export type ProblemSessionScalarWhereWithAggregatesInput = {
   instructorId?: Prisma.StringWithAggregatesFilter<"ProblemSession"> | string
   videoCallId?: Prisma.StringWithAggregatesFilter<"ProblemSession"> | string
   status?: Prisma.EnumSessionStatusWithAggregatesFilter<"ProblemSession"> | $Enums.SessionStatus
-  startedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ProblemSession"> | Date | string | null
+  startedAt?: Prisma.DateTimeWithAggregatesFilter<"ProblemSession"> | Date | string
   endedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ProblemSession"> | Date | string | null
   learnerSolveStatus?: Prisma.EnumSolveStatusNullableWithAggregatesFilter<"ProblemSession"> | $Enums.SolveStatus | null
   instructorMarkedCompleted?: Prisma.BoolWithAggregatesFilter<"ProblemSession"> | boolean
@@ -328,7 +328,7 @@ export type ProblemSessionCreateInput = {
   id?: string
   videoCallId: string
   status?: $Enums.SessionStatus
-  startedAt?: Date | string | null
+  startedAt?: Date | string
   endedAt?: Date | string | null
   learnerSolveStatus?: $Enums.SolveStatus | null
   instructorMarkedCompleted?: boolean
@@ -338,7 +338,7 @@ export type ProblemSessionCreateInput = {
   learner: Prisma.LearnerCreateNestedOneWithoutSessionsInput
   instructor: Prisma.InstructorCreateNestedOneWithoutSessionsInput
   coinTransaction?: Prisma.CoinTransactionCreateNestedOneWithoutSessionInput
-  review?: Prisma.ReviewCreateNestedOneWithoutSessionInput
+  review?: Prisma.ReviewCreateNestedManyWithoutSessionInput
 }
 
 export type ProblemSessionUncheckedCreateInput = {
@@ -348,21 +348,21 @@ export type ProblemSessionUncheckedCreateInput = {
   instructorId: string
   videoCallId: string
   status?: $Enums.SessionStatus
-  startedAt?: Date | string | null
+  startedAt?: Date | string
   endedAt?: Date | string | null
   learnerSolveStatus?: $Enums.SolveStatus | null
   instructorMarkedCompleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   coinTransaction?: Prisma.CoinTransactionUncheckedCreateNestedOneWithoutSessionInput
-  review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type ProblemSessionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   videoCallId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
-  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   learnerSolveStatus?: Prisma.NullableEnumSolveStatusFieldUpdateOperationsInput | $Enums.SolveStatus | null
   instructorMarkedCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -372,7 +372,7 @@ export type ProblemSessionUpdateInput = {
   learner?: Prisma.LearnerUpdateOneRequiredWithoutSessionsNestedInput
   instructor?: Prisma.InstructorUpdateOneRequiredWithoutSessionsNestedInput
   coinTransaction?: Prisma.CoinTransactionUpdateOneWithoutSessionNestedInput
-  review?: Prisma.ReviewUpdateOneWithoutSessionNestedInput
+  review?: Prisma.ReviewUpdateManyWithoutSessionNestedInput
 }
 
 export type ProblemSessionUncheckedUpdateInput = {
@@ -382,14 +382,14 @@ export type ProblemSessionUncheckedUpdateInput = {
   instructorId?: Prisma.StringFieldUpdateOperationsInput | string
   videoCallId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
-  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   learnerSolveStatus?: Prisma.NullableEnumSolveStatusFieldUpdateOperationsInput | $Enums.SolveStatus | null
   instructorMarkedCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coinTransaction?: Prisma.CoinTransactionUncheckedUpdateOneWithoutSessionNestedInput
-  review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type ProblemSessionCreateManyInput = {
@@ -399,7 +399,7 @@ export type ProblemSessionCreateManyInput = {
   instructorId: string
   videoCallId: string
   status?: $Enums.SessionStatus
-  startedAt?: Date | string | null
+  startedAt?: Date | string
   endedAt?: Date | string | null
   learnerSolveStatus?: $Enums.SolveStatus | null
   instructorMarkedCompleted?: boolean
@@ -411,7 +411,7 @@ export type ProblemSessionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   videoCallId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
-  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   learnerSolveStatus?: Prisma.NullableEnumSolveStatusFieldUpdateOperationsInput | $Enums.SolveStatus | null
   instructorMarkedCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -426,7 +426,7 @@ export type ProblemSessionUncheckedUpdateManyInput = {
   instructorId?: Prisma.StringFieldUpdateOperationsInput | string
   videoCallId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
-  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   learnerSolveStatus?: Prisma.NullableEnumSolveStatusFieldUpdateOperationsInput | $Enums.SolveStatus | null
   instructorMarkedCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -663,7 +663,7 @@ export type ProblemSessionCreateWithoutProblemInput = {
   id?: string
   videoCallId: string
   status?: $Enums.SessionStatus
-  startedAt?: Date | string | null
+  startedAt?: Date | string
   endedAt?: Date | string | null
   learnerSolveStatus?: $Enums.SolveStatus | null
   instructorMarkedCompleted?: boolean
@@ -672,7 +672,7 @@ export type ProblemSessionCreateWithoutProblemInput = {
   learner: Prisma.LearnerCreateNestedOneWithoutSessionsInput
   instructor: Prisma.InstructorCreateNestedOneWithoutSessionsInput
   coinTransaction?: Prisma.CoinTransactionCreateNestedOneWithoutSessionInput
-  review?: Prisma.ReviewCreateNestedOneWithoutSessionInput
+  review?: Prisma.ReviewCreateNestedManyWithoutSessionInput
 }
 
 export type ProblemSessionUncheckedCreateWithoutProblemInput = {
@@ -681,14 +681,14 @@ export type ProblemSessionUncheckedCreateWithoutProblemInput = {
   instructorId: string
   videoCallId: string
   status?: $Enums.SessionStatus
-  startedAt?: Date | string | null
+  startedAt?: Date | string
   endedAt?: Date | string | null
   learnerSolveStatus?: $Enums.SolveStatus | null
   instructorMarkedCompleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   coinTransaction?: Prisma.CoinTransactionUncheckedCreateNestedOneWithoutSessionInput
-  review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type ProblemSessionCreateOrConnectWithoutProblemInput = {
@@ -711,7 +711,7 @@ export type ProblemSessionUpdateWithoutProblemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   videoCallId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
-  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   learnerSolveStatus?: Prisma.NullableEnumSolveStatusFieldUpdateOperationsInput | $Enums.SolveStatus | null
   instructorMarkedCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -720,7 +720,7 @@ export type ProblemSessionUpdateWithoutProblemInput = {
   learner?: Prisma.LearnerUpdateOneRequiredWithoutSessionsNestedInput
   instructor?: Prisma.InstructorUpdateOneRequiredWithoutSessionsNestedInput
   coinTransaction?: Prisma.CoinTransactionUpdateOneWithoutSessionNestedInput
-  review?: Prisma.ReviewUpdateOneWithoutSessionNestedInput
+  review?: Prisma.ReviewUpdateManyWithoutSessionNestedInput
 }
 
 export type ProblemSessionUncheckedUpdateWithoutProblemInput = {
@@ -729,21 +729,21 @@ export type ProblemSessionUncheckedUpdateWithoutProblemInput = {
   instructorId?: Prisma.StringFieldUpdateOperationsInput | string
   videoCallId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
-  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   learnerSolveStatus?: Prisma.NullableEnumSolveStatusFieldUpdateOperationsInput | $Enums.SolveStatus | null
   instructorMarkedCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coinTransaction?: Prisma.CoinTransactionUncheckedUpdateOneWithoutSessionNestedInput
-  review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type ProblemSessionCreateWithoutCoinTransactionInput = {
   id?: string
   videoCallId: string
   status?: $Enums.SessionStatus
-  startedAt?: Date | string | null
+  startedAt?: Date | string
   endedAt?: Date | string | null
   learnerSolveStatus?: $Enums.SolveStatus | null
   instructorMarkedCompleted?: boolean
@@ -752,7 +752,7 @@ export type ProblemSessionCreateWithoutCoinTransactionInput = {
   problem: Prisma.ProblemPostCreateNestedOneWithoutProblemSessionInput
   learner: Prisma.LearnerCreateNestedOneWithoutSessionsInput
   instructor: Prisma.InstructorCreateNestedOneWithoutSessionsInput
-  review?: Prisma.ReviewCreateNestedOneWithoutSessionInput
+  review?: Prisma.ReviewCreateNestedManyWithoutSessionInput
 }
 
 export type ProblemSessionUncheckedCreateWithoutCoinTransactionInput = {
@@ -762,13 +762,13 @@ export type ProblemSessionUncheckedCreateWithoutCoinTransactionInput = {
   instructorId: string
   videoCallId: string
   status?: $Enums.SessionStatus
-  startedAt?: Date | string | null
+  startedAt?: Date | string
   endedAt?: Date | string | null
   learnerSolveStatus?: $Enums.SolveStatus | null
   instructorMarkedCompleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type ProblemSessionCreateOrConnectWithoutCoinTransactionInput = {
@@ -791,7 +791,7 @@ export type ProblemSessionUpdateWithoutCoinTransactionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   videoCallId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
-  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   learnerSolveStatus?: Prisma.NullableEnumSolveStatusFieldUpdateOperationsInput | $Enums.SolveStatus | null
   instructorMarkedCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -800,7 +800,7 @@ export type ProblemSessionUpdateWithoutCoinTransactionInput = {
   problem?: Prisma.ProblemPostUpdateOneRequiredWithoutProblemSessionNestedInput
   learner?: Prisma.LearnerUpdateOneRequiredWithoutSessionsNestedInput
   instructor?: Prisma.InstructorUpdateOneRequiredWithoutSessionsNestedInput
-  review?: Prisma.ReviewUpdateOneWithoutSessionNestedInput
+  review?: Prisma.ReviewUpdateManyWithoutSessionNestedInput
 }
 
 export type ProblemSessionUncheckedUpdateWithoutCoinTransactionInput = {
@@ -810,20 +810,20 @@ export type ProblemSessionUncheckedUpdateWithoutCoinTransactionInput = {
   instructorId?: Prisma.StringFieldUpdateOperationsInput | string
   videoCallId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
-  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   learnerSolveStatus?: Prisma.NullableEnumSolveStatusFieldUpdateOperationsInput | $Enums.SolveStatus | null
   instructorMarkedCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type ProblemSessionCreateWithoutReviewInput = {
   id?: string
   videoCallId: string
   status?: $Enums.SessionStatus
-  startedAt?: Date | string | null
+  startedAt?: Date | string
   endedAt?: Date | string | null
   learnerSolveStatus?: $Enums.SolveStatus | null
   instructorMarkedCompleted?: boolean
@@ -842,7 +842,7 @@ export type ProblemSessionUncheckedCreateWithoutReviewInput = {
   instructorId: string
   videoCallId: string
   status?: $Enums.SessionStatus
-  startedAt?: Date | string | null
+  startedAt?: Date | string
   endedAt?: Date | string | null
   learnerSolveStatus?: $Enums.SolveStatus | null
   instructorMarkedCompleted?: boolean
@@ -871,7 +871,7 @@ export type ProblemSessionUpdateWithoutReviewInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   videoCallId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
-  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   learnerSolveStatus?: Prisma.NullableEnumSolveStatusFieldUpdateOperationsInput | $Enums.SolveStatus | null
   instructorMarkedCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -890,7 +890,7 @@ export type ProblemSessionUncheckedUpdateWithoutReviewInput = {
   instructorId?: Prisma.StringFieldUpdateOperationsInput | string
   videoCallId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
-  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   learnerSolveStatus?: Prisma.NullableEnumSolveStatusFieldUpdateOperationsInput | $Enums.SolveStatus | null
   instructorMarkedCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -903,7 +903,7 @@ export type ProblemSessionCreateWithoutInstructorInput = {
   id?: string
   videoCallId: string
   status?: $Enums.SessionStatus
-  startedAt?: Date | string | null
+  startedAt?: Date | string
   endedAt?: Date | string | null
   learnerSolveStatus?: $Enums.SolveStatus | null
   instructorMarkedCompleted?: boolean
@@ -912,7 +912,7 @@ export type ProblemSessionCreateWithoutInstructorInput = {
   problem: Prisma.ProblemPostCreateNestedOneWithoutProblemSessionInput
   learner: Prisma.LearnerCreateNestedOneWithoutSessionsInput
   coinTransaction?: Prisma.CoinTransactionCreateNestedOneWithoutSessionInput
-  review?: Prisma.ReviewCreateNestedOneWithoutSessionInput
+  review?: Prisma.ReviewCreateNestedManyWithoutSessionInput
 }
 
 export type ProblemSessionUncheckedCreateWithoutInstructorInput = {
@@ -921,14 +921,14 @@ export type ProblemSessionUncheckedCreateWithoutInstructorInput = {
   learnerId: string
   videoCallId: string
   status?: $Enums.SessionStatus
-  startedAt?: Date | string | null
+  startedAt?: Date | string
   endedAt?: Date | string | null
   learnerSolveStatus?: $Enums.SolveStatus | null
   instructorMarkedCompleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   coinTransaction?: Prisma.CoinTransactionUncheckedCreateNestedOneWithoutSessionInput
-  review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type ProblemSessionCreateOrConnectWithoutInstructorInput = {
@@ -967,7 +967,7 @@ export type ProblemSessionScalarWhereInput = {
   instructorId?: Prisma.StringFilter<"ProblemSession"> | string
   videoCallId?: Prisma.StringFilter<"ProblemSession"> | string
   status?: Prisma.EnumSessionStatusFilter<"ProblemSession"> | $Enums.SessionStatus
-  startedAt?: Prisma.DateTimeNullableFilter<"ProblemSession"> | Date | string | null
+  startedAt?: Prisma.DateTimeFilter<"ProblemSession"> | Date | string
   endedAt?: Prisma.DateTimeNullableFilter<"ProblemSession"> | Date | string | null
   learnerSolveStatus?: Prisma.EnumSolveStatusNullableFilter<"ProblemSession"> | $Enums.SolveStatus | null
   instructorMarkedCompleted?: Prisma.BoolFilter<"ProblemSession"> | boolean
@@ -979,7 +979,7 @@ export type ProblemSessionCreateWithoutLearnerInput = {
   id?: string
   videoCallId: string
   status?: $Enums.SessionStatus
-  startedAt?: Date | string | null
+  startedAt?: Date | string
   endedAt?: Date | string | null
   learnerSolveStatus?: $Enums.SolveStatus | null
   instructorMarkedCompleted?: boolean
@@ -988,7 +988,7 @@ export type ProblemSessionCreateWithoutLearnerInput = {
   problem: Prisma.ProblemPostCreateNestedOneWithoutProblemSessionInput
   instructor: Prisma.InstructorCreateNestedOneWithoutSessionsInput
   coinTransaction?: Prisma.CoinTransactionCreateNestedOneWithoutSessionInput
-  review?: Prisma.ReviewCreateNestedOneWithoutSessionInput
+  review?: Prisma.ReviewCreateNestedManyWithoutSessionInput
 }
 
 export type ProblemSessionUncheckedCreateWithoutLearnerInput = {
@@ -997,14 +997,14 @@ export type ProblemSessionUncheckedCreateWithoutLearnerInput = {
   instructorId: string
   videoCallId: string
   status?: $Enums.SessionStatus
-  startedAt?: Date | string | null
+  startedAt?: Date | string
   endedAt?: Date | string | null
   learnerSolveStatus?: $Enums.SolveStatus | null
   instructorMarkedCompleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   coinTransaction?: Prisma.CoinTransactionUncheckedCreateNestedOneWithoutSessionInput
-  review?: Prisma.ReviewUncheckedCreateNestedOneWithoutSessionInput
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type ProblemSessionCreateOrConnectWithoutLearnerInput = {
@@ -1039,7 +1039,7 @@ export type ProblemSessionCreateManyInstructorInput = {
   learnerId: string
   videoCallId: string
   status?: $Enums.SessionStatus
-  startedAt?: Date | string | null
+  startedAt?: Date | string
   endedAt?: Date | string | null
   learnerSolveStatus?: $Enums.SolveStatus | null
   instructorMarkedCompleted?: boolean
@@ -1051,7 +1051,7 @@ export type ProblemSessionUpdateWithoutInstructorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   videoCallId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
-  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   learnerSolveStatus?: Prisma.NullableEnumSolveStatusFieldUpdateOperationsInput | $Enums.SolveStatus | null
   instructorMarkedCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1060,7 +1060,7 @@ export type ProblemSessionUpdateWithoutInstructorInput = {
   problem?: Prisma.ProblemPostUpdateOneRequiredWithoutProblemSessionNestedInput
   learner?: Prisma.LearnerUpdateOneRequiredWithoutSessionsNestedInput
   coinTransaction?: Prisma.CoinTransactionUpdateOneWithoutSessionNestedInput
-  review?: Prisma.ReviewUpdateOneWithoutSessionNestedInput
+  review?: Prisma.ReviewUpdateManyWithoutSessionNestedInput
 }
 
 export type ProblemSessionUncheckedUpdateWithoutInstructorInput = {
@@ -1069,14 +1069,14 @@ export type ProblemSessionUncheckedUpdateWithoutInstructorInput = {
   learnerId?: Prisma.StringFieldUpdateOperationsInput | string
   videoCallId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
-  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   learnerSolveStatus?: Prisma.NullableEnumSolveStatusFieldUpdateOperationsInput | $Enums.SolveStatus | null
   instructorMarkedCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coinTransaction?: Prisma.CoinTransactionUncheckedUpdateOneWithoutSessionNestedInput
-  review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type ProblemSessionUncheckedUpdateManyWithoutInstructorInput = {
@@ -1085,7 +1085,7 @@ export type ProblemSessionUncheckedUpdateManyWithoutInstructorInput = {
   learnerId?: Prisma.StringFieldUpdateOperationsInput | string
   videoCallId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
-  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   learnerSolveStatus?: Prisma.NullableEnumSolveStatusFieldUpdateOperationsInput | $Enums.SolveStatus | null
   instructorMarkedCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1099,7 +1099,7 @@ export type ProblemSessionCreateManyLearnerInput = {
   instructorId: string
   videoCallId: string
   status?: $Enums.SessionStatus
-  startedAt?: Date | string | null
+  startedAt?: Date | string
   endedAt?: Date | string | null
   learnerSolveStatus?: $Enums.SolveStatus | null
   instructorMarkedCompleted?: boolean
@@ -1111,7 +1111,7 @@ export type ProblemSessionUpdateWithoutLearnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   videoCallId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
-  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   learnerSolveStatus?: Prisma.NullableEnumSolveStatusFieldUpdateOperationsInput | $Enums.SolveStatus | null
   instructorMarkedCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1120,7 +1120,7 @@ export type ProblemSessionUpdateWithoutLearnerInput = {
   problem?: Prisma.ProblemPostUpdateOneRequiredWithoutProblemSessionNestedInput
   instructor?: Prisma.InstructorUpdateOneRequiredWithoutSessionsNestedInput
   coinTransaction?: Prisma.CoinTransactionUpdateOneWithoutSessionNestedInput
-  review?: Prisma.ReviewUpdateOneWithoutSessionNestedInput
+  review?: Prisma.ReviewUpdateManyWithoutSessionNestedInput
 }
 
 export type ProblemSessionUncheckedUpdateWithoutLearnerInput = {
@@ -1129,14 +1129,14 @@ export type ProblemSessionUncheckedUpdateWithoutLearnerInput = {
   instructorId?: Prisma.StringFieldUpdateOperationsInput | string
   videoCallId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
-  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   learnerSolveStatus?: Prisma.NullableEnumSolveStatusFieldUpdateOperationsInput | $Enums.SolveStatus | null
   instructorMarkedCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coinTransaction?: Prisma.CoinTransactionUncheckedUpdateOneWithoutSessionNestedInput
-  review?: Prisma.ReviewUncheckedUpdateOneWithoutSessionNestedInput
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type ProblemSessionUncheckedUpdateManyWithoutLearnerInput = {
@@ -1145,7 +1145,7 @@ export type ProblemSessionUncheckedUpdateManyWithoutLearnerInput = {
   instructorId?: Prisma.StringFieldUpdateOperationsInput | string
   videoCallId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
-  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   learnerSolveStatus?: Prisma.NullableEnumSolveStatusFieldUpdateOperationsInput | $Enums.SolveStatus | null
   instructorMarkedCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1153,6 +1153,35 @@ export type ProblemSessionUncheckedUpdateManyWithoutLearnerInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type ProblemSessionCountOutputType
+ */
+
+export type ProblemSessionCountOutputType = {
+  review: number
+}
+
+export type ProblemSessionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  review?: boolean | ProblemSessionCountOutputTypeCountReviewArgs
+}
+
+/**
+ * ProblemSessionCountOutputType without action
+ */
+export type ProblemSessionCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProblemSessionCountOutputType
+   */
+  select?: Prisma.ProblemSessionCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ProblemSessionCountOutputType without action
+ */
+export type ProblemSessionCountOutputTypeCountReviewArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReviewWhereInput
+}
 
 
 export type ProblemSessionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1173,6 +1202,7 @@ export type ProblemSessionSelect<ExtArgs extends runtime.Types.Extensions.Intern
   instructor?: boolean | Prisma.InstructorDefaultArgs<ExtArgs>
   coinTransaction?: boolean | Prisma.ProblemSession$coinTransactionArgs<ExtArgs>
   review?: boolean | Prisma.ProblemSession$reviewArgs<ExtArgs>
+  _count?: boolean | Prisma.ProblemSessionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["problemSession"]>
 
 export type ProblemSessionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1233,6 +1263,7 @@ export type ProblemSessionInclude<ExtArgs extends runtime.Types.Extensions.Inter
   instructor?: boolean | Prisma.InstructorDefaultArgs<ExtArgs>
   coinTransaction?: boolean | Prisma.ProblemSession$coinTransactionArgs<ExtArgs>
   review?: boolean | Prisma.ProblemSession$reviewArgs<ExtArgs>
+  _count?: boolean | Prisma.ProblemSessionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProblemSessionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   problem?: boolean | Prisma.ProblemPostDefaultArgs<ExtArgs>
@@ -1252,7 +1283,7 @@ export type $ProblemSessionPayload<ExtArgs extends runtime.Types.Extensions.Inte
     learner: Prisma.$LearnerPayload<ExtArgs>
     instructor: Prisma.$InstructorPayload<ExtArgs>
     coinTransaction: Prisma.$CoinTransactionPayload<ExtArgs> | null
-    review: Prisma.$ReviewPayload<ExtArgs> | null
+    review: Prisma.$ReviewPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1261,7 +1292,7 @@ export type $ProblemSessionPayload<ExtArgs extends runtime.Types.Extensions.Inte
     instructorId: string
     videoCallId: string
     status: $Enums.SessionStatus
-    startedAt: Date | null
+    startedAt: Date
     endedAt: Date | null
     learnerSolveStatus: $Enums.SolveStatus | null
     instructorMarkedCompleted: boolean
@@ -1665,7 +1696,7 @@ export interface Prisma__ProblemSessionClient<T, Null = never, ExtArgs extends r
   learner<T extends Prisma.LearnerDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LearnerDefaultArgs<ExtArgs>>): Prisma.Prisma__LearnerClient<runtime.Types.Result.GetResult<Prisma.$LearnerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   instructor<T extends Prisma.InstructorDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InstructorDefaultArgs<ExtArgs>>): Prisma.Prisma__InstructorClient<runtime.Types.Result.GetResult<Prisma.$InstructorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   coinTransaction<T extends Prisma.ProblemSession$coinTransactionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProblemSession$coinTransactionArgs<ExtArgs>>): Prisma.Prisma__CoinTransactionClient<runtime.Types.Result.GetResult<Prisma.$CoinTransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  review<T extends Prisma.ProblemSession$reviewArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProblemSession$reviewArgs<ExtArgs>>): Prisma.Prisma__ReviewClient<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  review<T extends Prisma.ProblemSession$reviewArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProblemSession$reviewArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2138,6 +2169,11 @@ export type ProblemSession$reviewArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   include?: Prisma.ReviewInclude<ExtArgs> | null
   where?: Prisma.ReviewWhereInput
+  orderBy?: Prisma.ReviewOrderByWithRelationInput | Prisma.ReviewOrderByWithRelationInput[]
+  cursor?: Prisma.ReviewWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReviewScalarFieldEnum | Prisma.ReviewScalarFieldEnum[]
 }
 
 /**

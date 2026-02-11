@@ -20,8 +20,18 @@ export type LearnerModel = runtime.Types.Result.DefaultSelection<Prisma.$Learner
 
 export type AggregateLearner = {
   _count: LearnerCountAggregateOutputType | null
+  _avg: LearnerAvgAggregateOutputType | null
+  _sum: LearnerSumAggregateOutputType | null
   _min: LearnerMinAggregateOutputType | null
   _max: LearnerMaxAggregateOutputType | null
+}
+
+export type LearnerAvgAggregateOutputType = {
+  averageRating: number | null
+}
+
+export type LearnerSumAggregateOutputType = {
+  averageRating: number | null
 }
 
 export type LearnerMinAggregateOutputType = {
@@ -31,6 +41,7 @@ export type LearnerMinAggregateOutputType = {
   profilePhoto: string | null
   address: string | null
   isDeleted: boolean | null
+  averageRating: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -42,6 +53,7 @@ export type LearnerMaxAggregateOutputType = {
   profilePhoto: string | null
   address: string | null
   isDeleted: boolean | null
+  averageRating: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -53,11 +65,20 @@ export type LearnerCountAggregateOutputType = {
   profilePhoto: number
   address: number
   isDeleted: number
+  averageRating: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
+
+export type LearnerAvgAggregateInputType = {
+  averageRating?: true
+}
+
+export type LearnerSumAggregateInputType = {
+  averageRating?: true
+}
 
 export type LearnerMinAggregateInputType = {
   id?: true
@@ -66,6 +87,7 @@ export type LearnerMinAggregateInputType = {
   profilePhoto?: true
   address?: true
   isDeleted?: true
+  averageRating?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -77,6 +99,7 @@ export type LearnerMaxAggregateInputType = {
   profilePhoto?: true
   address?: true
   isDeleted?: true
+  averageRating?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -88,6 +111,7 @@ export type LearnerCountAggregateInputType = {
   profilePhoto?: true
   address?: true
   isDeleted?: true
+  averageRating?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -131,6 +155,18 @@ export type LearnerAggregateArgs<ExtArgs extends runtime.Types.Extensions.Intern
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: LearnerAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: LearnerSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: LearnerMinAggregateInputType
@@ -161,6 +197,8 @@ export type LearnerGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   _count?: LearnerCountAggregateInputType | true
+  _avg?: LearnerAvgAggregateInputType
+  _sum?: LearnerSumAggregateInputType
   _min?: LearnerMinAggregateInputType
   _max?: LearnerMaxAggregateInputType
 }
@@ -172,9 +210,12 @@ export type LearnerGroupByOutputType = {
   profilePhoto: string | null
   address: string | null
   isDeleted: boolean
+  averageRating: number
   createdAt: Date
   updatedAt: Date
   _count: LearnerCountAggregateOutputType | null
+  _avg: LearnerAvgAggregateOutputType | null
+  _sum: LearnerSumAggregateOutputType | null
   _min: LearnerMinAggregateOutputType | null
   _max: LearnerMaxAggregateOutputType | null
 }
@@ -204,6 +245,7 @@ export type LearnerWhereInput = {
   profilePhoto?: Prisma.StringNullableFilter<"Learner"> | string | null
   address?: Prisma.StringNullableFilter<"Learner"> | string | null
   isDeleted?: Prisma.BoolFilter<"Learner"> | boolean
+  averageRating?: Prisma.FloatFilter<"Learner"> | number
   createdAt?: Prisma.DateTimeFilter<"Learner"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Learner"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -219,6 +261,7 @@ export type LearnerOrderByWithRelationInput = {
   profilePhoto?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -237,6 +280,7 @@ export type LearnerWhereUniqueInput = Prisma.AtLeast<{
   profilePhoto?: Prisma.StringNullableFilter<"Learner"> | string | null
   address?: Prisma.StringNullableFilter<"Learner"> | string | null
   isDeleted?: Prisma.BoolFilter<"Learner"> | boolean
+  averageRating?: Prisma.FloatFilter<"Learner"> | number
   createdAt?: Prisma.DateTimeFilter<"Learner"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Learner"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -252,11 +296,14 @@ export type LearnerOrderByWithAggregationInput = {
   profilePhoto?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.LearnerCountOrderByAggregateInput
+  _avg?: Prisma.LearnerAvgOrderByAggregateInput
   _max?: Prisma.LearnerMaxOrderByAggregateInput
   _min?: Prisma.LearnerMinOrderByAggregateInput
+  _sum?: Prisma.LearnerSumOrderByAggregateInput
 }
 
 export type LearnerScalarWhereWithAggregatesInput = {
@@ -269,6 +316,7 @@ export type LearnerScalarWhereWithAggregatesInput = {
   profilePhoto?: Prisma.StringNullableWithAggregatesFilter<"Learner"> | string | null
   address?: Prisma.StringNullableWithAggregatesFilter<"Learner"> | string | null
   isDeleted?: Prisma.BoolWithAggregatesFilter<"Learner"> | boolean
+  averageRating?: Prisma.FloatWithAggregatesFilter<"Learner"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Learner"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Learner"> | Date | string
 }
@@ -279,6 +327,7 @@ export type LearnerCreateInput = {
   profilePhoto?: string | null
   address?: string | null
   isDeleted?: boolean
+  averageRating?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutLearnerInput
@@ -294,6 +343,7 @@ export type LearnerUncheckedCreateInput = {
   profilePhoto?: string | null
   address?: string | null
   isDeleted?: boolean
+  averageRating?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   problems?: Prisma.ProblemPostUncheckedCreateNestedManyWithoutLearnerInput
@@ -307,6 +357,7 @@ export type LearnerUpdateInput = {
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutLearnerNestedInput
@@ -322,6 +373,7 @@ export type LearnerUncheckedUpdateInput = {
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   problems?: Prisma.ProblemPostUncheckedUpdateManyWithoutLearnerNestedInput
@@ -336,6 +388,7 @@ export type LearnerCreateManyInput = {
   profilePhoto?: string | null
   address?: string | null
   isDeleted?: boolean
+  averageRating?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -346,6 +399,7 @@ export type LearnerUpdateManyMutationInput = {
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -357,6 +411,7 @@ export type LearnerUncheckedUpdateManyInput = {
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -378,8 +433,13 @@ export type LearnerCountOrderByAggregateInput = {
   profilePhoto?: Prisma.SortOrder
   address?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type LearnerAvgOrderByAggregateInput = {
+  averageRating?: Prisma.SortOrder
 }
 
 export type LearnerMaxOrderByAggregateInput = {
@@ -389,6 +449,7 @@ export type LearnerMaxOrderByAggregateInput = {
   profilePhoto?: Prisma.SortOrder
   address?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -400,8 +461,13 @@ export type LearnerMinOrderByAggregateInput = {
   profilePhoto?: Prisma.SortOrder
   address?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type LearnerSumOrderByAggregateInput = {
+  averageRating?: Prisma.SortOrder
 }
 
 export type LearnerCreateNestedOneWithoutProblemsInput = {
@@ -484,6 +550,7 @@ export type LearnerCreateWithoutProblemsInput = {
   profilePhoto?: string | null
   address?: string | null
   isDeleted?: boolean
+  averageRating?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutLearnerInput
@@ -498,6 +565,7 @@ export type LearnerUncheckedCreateWithoutProblemsInput = {
   profilePhoto?: string | null
   address?: string | null
   isDeleted?: boolean
+  averageRating?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.ProblemSessionUncheckedCreateNestedManyWithoutLearnerInput
@@ -526,6 +594,7 @@ export type LearnerUpdateWithoutProblemsInput = {
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutLearnerNestedInput
@@ -540,6 +609,7 @@ export type LearnerUncheckedUpdateWithoutProblemsInput = {
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.ProblemSessionUncheckedUpdateManyWithoutLearnerNestedInput
@@ -552,6 +622,7 @@ export type LearnerCreateWithoutSessionsInput = {
   profilePhoto?: string | null
   address?: string | null
   isDeleted?: boolean
+  averageRating?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutLearnerInput
@@ -566,6 +637,7 @@ export type LearnerUncheckedCreateWithoutSessionsInput = {
   profilePhoto?: string | null
   address?: string | null
   isDeleted?: boolean
+  averageRating?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   problems?: Prisma.ProblemPostUncheckedCreateNestedManyWithoutLearnerInput
@@ -594,6 +666,7 @@ export type LearnerUpdateWithoutSessionsInput = {
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutLearnerNestedInput
@@ -608,6 +681,7 @@ export type LearnerUncheckedUpdateWithoutSessionsInput = {
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   problems?: Prisma.ProblemPostUncheckedUpdateManyWithoutLearnerNestedInput
@@ -620,6 +694,7 @@ export type LearnerCreateWithoutReviewsInput = {
   profilePhoto?: string | null
   address?: string | null
   isDeleted?: boolean
+  averageRating?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutLearnerInput
@@ -634,6 +709,7 @@ export type LearnerUncheckedCreateWithoutReviewsInput = {
   profilePhoto?: string | null
   address?: string | null
   isDeleted?: boolean
+  averageRating?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   problems?: Prisma.ProblemPostUncheckedCreateNestedManyWithoutLearnerInput
@@ -662,6 +738,7 @@ export type LearnerUpdateWithoutReviewsInput = {
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutLearnerNestedInput
@@ -676,6 +753,7 @@ export type LearnerUncheckedUpdateWithoutReviewsInput = {
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   problems?: Prisma.ProblemPostUncheckedUpdateManyWithoutLearnerNestedInput
@@ -688,6 +766,7 @@ export type LearnerCreateWithoutUserInput = {
   profilePhoto?: string | null
   address?: string | null
   isDeleted?: boolean
+  averageRating?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   problems?: Prisma.ProblemPostCreateNestedManyWithoutLearnerInput
@@ -701,6 +780,7 @@ export type LearnerUncheckedCreateWithoutUserInput = {
   profilePhoto?: string | null
   address?: string | null
   isDeleted?: boolean
+  averageRating?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   problems?: Prisma.ProblemPostUncheckedCreateNestedManyWithoutLearnerInput
@@ -730,6 +810,7 @@ export type LearnerUpdateWithoutUserInput = {
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   problems?: Prisma.ProblemPostUpdateManyWithoutLearnerNestedInput
@@ -743,6 +824,7 @@ export type LearnerUncheckedUpdateWithoutUserInput = {
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   problems?: Prisma.ProblemPostUncheckedUpdateManyWithoutLearnerNestedInput
@@ -806,6 +888,7 @@ export type LearnerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   profilePhoto?: boolean
   address?: boolean
   isDeleted?: boolean
+  averageRating?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -822,6 +905,7 @@ export type LearnerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   profilePhoto?: boolean
   address?: boolean
   isDeleted?: boolean
+  averageRating?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -834,6 +918,7 @@ export type LearnerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   profilePhoto?: boolean
   address?: boolean
   isDeleted?: boolean
+  averageRating?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -846,11 +931,12 @@ export type LearnerSelectScalar = {
   profilePhoto?: boolean
   address?: boolean
   isDeleted?: boolean
+  averageRating?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type LearnerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "profilePhoto" | "address" | "isDeleted" | "createdAt" | "updatedAt", ExtArgs["result"]["learner"]>
+export type LearnerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "profilePhoto" | "address" | "isDeleted" | "averageRating" | "createdAt" | "updatedAt", ExtArgs["result"]["learner"]>
 export type LearnerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   problems?: boolean | Prisma.Learner$problemsArgs<ExtArgs>
@@ -880,6 +966,7 @@ export type $LearnerPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     profilePhoto: string | null
     address: string | null
     isDeleted: boolean
+    averageRating: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["learner"]>
@@ -1315,6 +1402,7 @@ export interface LearnerFieldRefs {
   readonly profilePhoto: Prisma.FieldRef<"Learner", 'String'>
   readonly address: Prisma.FieldRef<"Learner", 'String'>
   readonly isDeleted: Prisma.FieldRef<"Learner", 'Boolean'>
+  readonly averageRating: Prisma.FieldRef<"Learner", 'Float'>
   readonly createdAt: Prisma.FieldRef<"Learner", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Learner", 'DateTime'>
 }

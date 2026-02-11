@@ -1180,13 +1180,14 @@ export type CoinTransactionScalarFieldEnum = (typeof CoinTransactionScalarFieldE
 
 export const ReviewScalarFieldEnum = {
   id: 'id',
-  sessionId: 'sessionId',
-  learnerId: 'learnerId',
-  instructorId: 'instructorId',
   rating: 'rating',
   comment: 'comment',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  sessionId: 'sessionId',
+  reviewerId: 'reviewerId',
+  reviewerRole: 'reviewerRole',
+  learnerId: 'learnerId',
+  instructorId: 'instructorId'
 } as const
 
 export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
@@ -1246,6 +1247,7 @@ export const LearnerScalarFieldEnum = {
   profilePhoto: 'profilePhoto',
   address: 'address',
   isDeleted: 'isDeleted',
+  averageRating: 'averageRating',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
