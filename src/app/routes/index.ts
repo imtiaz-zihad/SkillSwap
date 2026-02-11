@@ -5,6 +5,7 @@ import { IssueRouter } from "../modules/issue/issue.router";
 import { applicationRouter } from "../modules/application/application.router";
 import { sessionRouter } from "../modules/session/session.router";
 import { reviewRouter } from "../modules/reviews/review.router";
+import { dashboardRouter } from "../modules/dashboard/dashboard.router";
 
 const router = express.Router();
 
@@ -32,6 +33,10 @@ const moduleRoutes = [
   {
     path: "/reviews",
     route: reviewRouter,
+  },
+  {
+    path: "/dashboard",
+    route: dashboardRouter,
   },
 ];
 
