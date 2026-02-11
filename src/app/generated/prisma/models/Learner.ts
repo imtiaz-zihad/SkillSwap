@@ -20,8 +20,18 @@ export type LearnerModel = runtime.Types.Result.DefaultSelection<Prisma.$Learner
 
 export type AggregateLearner = {
   _count: LearnerCountAggregateOutputType | null
+  _avg: LearnerAvgAggregateOutputType | null
+  _sum: LearnerSumAggregateOutputType | null
   _min: LearnerMinAggregateOutputType | null
   _max: LearnerMaxAggregateOutputType | null
+}
+
+export type LearnerAvgAggregateOutputType = {
+  averageRating: number | null
+}
+
+export type LearnerSumAggregateOutputType = {
+  averageRating: number | null
 }
 
 export type LearnerMinAggregateOutputType = {
@@ -31,6 +41,7 @@ export type LearnerMinAggregateOutputType = {
   profilePhoto: string | null
   address: string | null
   isDeleted: boolean | null
+  averageRating: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -42,6 +53,7 @@ export type LearnerMaxAggregateOutputType = {
   profilePhoto: string | null
   address: string | null
   isDeleted: boolean | null
+  averageRating: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -53,11 +65,20 @@ export type LearnerCountAggregateOutputType = {
   profilePhoto: number
   address: number
   isDeleted: number
+  averageRating: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
+
+export type LearnerAvgAggregateInputType = {
+  averageRating?: true
+}
+
+export type LearnerSumAggregateInputType = {
+  averageRating?: true
+}
 
 export type LearnerMinAggregateInputType = {
   id?: true
@@ -66,6 +87,7 @@ export type LearnerMinAggregateInputType = {
   profilePhoto?: true
   address?: true
   isDeleted?: true
+  averageRating?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -77,6 +99,7 @@ export type LearnerMaxAggregateInputType = {
   profilePhoto?: true
   address?: true
   isDeleted?: true
+  averageRating?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -88,6 +111,7 @@ export type LearnerCountAggregateInputType = {
   profilePhoto?: true
   address?: true
   isDeleted?: true
+  averageRating?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -131,6 +155,18 @@ export type LearnerAggregateArgs<ExtArgs extends runtime.Types.Extensions.Intern
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: LearnerAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: LearnerSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: LearnerMinAggregateInputType
@@ -161,6 +197,8 @@ export type LearnerGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   _count?: LearnerCountAggregateInputType | true
+  _avg?: LearnerAvgAggregateInputType
+  _sum?: LearnerSumAggregateInputType
   _min?: LearnerMinAggregateInputType
   _max?: LearnerMaxAggregateInputType
 }
@@ -172,9 +210,12 @@ export type LearnerGroupByOutputType = {
   profilePhoto: string | null
   address: string | null
   isDeleted: boolean
+  averageRating: number
   createdAt: Date
   updatedAt: Date
   _count: LearnerCountAggregateOutputType | null
+  _avg: LearnerAvgAggregateOutputType | null
+  _sum: LearnerSumAggregateOutputType | null
   _min: LearnerMinAggregateOutputType | null
   _max: LearnerMaxAggregateOutputType | null
 }
@@ -204,9 +245,13 @@ export type LearnerWhereInput = {
   profilePhoto?: Prisma.StringNullableFilter<"Learner"> | string | null
   address?: Prisma.StringNullableFilter<"Learner"> | string | null
   isDeleted?: Prisma.BoolFilter<"Learner"> | boolean
+  averageRating?: Prisma.FloatFilter<"Learner"> | number
   createdAt?: Prisma.DateTimeFilter<"Learner"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Learner"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  problems?: Prisma.ProblemPostListRelationFilter
+  sessions?: Prisma.ProblemSessionListRelationFilter
+  reviews?: Prisma.ReviewListRelationFilter
 }
 
 export type LearnerOrderByWithRelationInput = {
@@ -216,9 +261,13 @@ export type LearnerOrderByWithRelationInput = {
   profilePhoto?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  problems?: Prisma.ProblemPostOrderByRelationAggregateInput
+  sessions?: Prisma.ProblemSessionOrderByRelationAggregateInput
+  reviews?: Prisma.ReviewOrderByRelationAggregateInput
 }
 
 export type LearnerWhereUniqueInput = Prisma.AtLeast<{
@@ -231,9 +280,13 @@ export type LearnerWhereUniqueInput = Prisma.AtLeast<{
   profilePhoto?: Prisma.StringNullableFilter<"Learner"> | string | null
   address?: Prisma.StringNullableFilter<"Learner"> | string | null
   isDeleted?: Prisma.BoolFilter<"Learner"> | boolean
+  averageRating?: Prisma.FloatFilter<"Learner"> | number
   createdAt?: Prisma.DateTimeFilter<"Learner"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Learner"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  problems?: Prisma.ProblemPostListRelationFilter
+  sessions?: Prisma.ProblemSessionListRelationFilter
+  reviews?: Prisma.ReviewListRelationFilter
 }, "id" | "email">
 
 export type LearnerOrderByWithAggregationInput = {
@@ -243,11 +296,14 @@ export type LearnerOrderByWithAggregationInput = {
   profilePhoto?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.LearnerCountOrderByAggregateInput
+  _avg?: Prisma.LearnerAvgOrderByAggregateInput
   _max?: Prisma.LearnerMaxOrderByAggregateInput
   _min?: Prisma.LearnerMinOrderByAggregateInput
+  _sum?: Prisma.LearnerSumOrderByAggregateInput
 }
 
 export type LearnerScalarWhereWithAggregatesInput = {
@@ -260,6 +316,7 @@ export type LearnerScalarWhereWithAggregatesInput = {
   profilePhoto?: Prisma.StringNullableWithAggregatesFilter<"Learner"> | string | null
   address?: Prisma.StringNullableWithAggregatesFilter<"Learner"> | string | null
   isDeleted?: Prisma.BoolWithAggregatesFilter<"Learner"> | boolean
+  averageRating?: Prisma.FloatWithAggregatesFilter<"Learner"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Learner"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Learner"> | Date | string
 }
@@ -270,9 +327,13 @@ export type LearnerCreateInput = {
   profilePhoto?: string | null
   address?: string | null
   isDeleted?: boolean
+  averageRating?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutLearnerInput
+  problems?: Prisma.ProblemPostCreateNestedManyWithoutLearnerInput
+  sessions?: Prisma.ProblemSessionCreateNestedManyWithoutLearnerInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutLearnerInput
 }
 
 export type LearnerUncheckedCreateInput = {
@@ -282,8 +343,12 @@ export type LearnerUncheckedCreateInput = {
   profilePhoto?: string | null
   address?: string | null
   isDeleted?: boolean
+  averageRating?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  problems?: Prisma.ProblemPostUncheckedCreateNestedManyWithoutLearnerInput
+  sessions?: Prisma.ProblemSessionUncheckedCreateNestedManyWithoutLearnerInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutLearnerInput
 }
 
 export type LearnerUpdateInput = {
@@ -292,9 +357,13 @@ export type LearnerUpdateInput = {
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutLearnerNestedInput
+  problems?: Prisma.ProblemPostUpdateManyWithoutLearnerNestedInput
+  sessions?: Prisma.ProblemSessionUpdateManyWithoutLearnerNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutLearnerNestedInput
 }
 
 export type LearnerUncheckedUpdateInput = {
@@ -304,8 +373,12 @@ export type LearnerUncheckedUpdateInput = {
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  problems?: Prisma.ProblemPostUncheckedUpdateManyWithoutLearnerNestedInput
+  sessions?: Prisma.ProblemSessionUncheckedUpdateManyWithoutLearnerNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutLearnerNestedInput
 }
 
 export type LearnerCreateManyInput = {
@@ -315,6 +388,7 @@ export type LearnerCreateManyInput = {
   profilePhoto?: string | null
   address?: string | null
   isDeleted?: boolean
+  averageRating?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -325,6 +399,7 @@ export type LearnerUpdateManyMutationInput = {
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -336,8 +411,14 @@ export type LearnerUncheckedUpdateManyInput = {
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type LearnerScalarRelationFilter = {
+  is?: Prisma.LearnerWhereInput
+  isNot?: Prisma.LearnerWhereInput
 }
 
 export type LearnerNullableScalarRelationFilter = {
@@ -352,8 +433,13 @@ export type LearnerCountOrderByAggregateInput = {
   profilePhoto?: Prisma.SortOrder
   address?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type LearnerAvgOrderByAggregateInput = {
+  averageRating?: Prisma.SortOrder
 }
 
 export type LearnerMaxOrderByAggregateInput = {
@@ -363,6 +449,7 @@ export type LearnerMaxOrderByAggregateInput = {
   profilePhoto?: Prisma.SortOrder
   address?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -374,8 +461,55 @@ export type LearnerMinOrderByAggregateInput = {
   profilePhoto?: Prisma.SortOrder
   address?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type LearnerSumOrderByAggregateInput = {
+  averageRating?: Prisma.SortOrder
+}
+
+export type LearnerCreateNestedOneWithoutProblemsInput = {
+  create?: Prisma.XOR<Prisma.LearnerCreateWithoutProblemsInput, Prisma.LearnerUncheckedCreateWithoutProblemsInput>
+  connectOrCreate?: Prisma.LearnerCreateOrConnectWithoutProblemsInput
+  connect?: Prisma.LearnerWhereUniqueInput
+}
+
+export type LearnerUpdateOneRequiredWithoutProblemsNestedInput = {
+  create?: Prisma.XOR<Prisma.LearnerCreateWithoutProblemsInput, Prisma.LearnerUncheckedCreateWithoutProblemsInput>
+  connectOrCreate?: Prisma.LearnerCreateOrConnectWithoutProblemsInput
+  upsert?: Prisma.LearnerUpsertWithoutProblemsInput
+  connect?: Prisma.LearnerWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LearnerUpdateToOneWithWhereWithoutProblemsInput, Prisma.LearnerUpdateWithoutProblemsInput>, Prisma.LearnerUncheckedUpdateWithoutProblemsInput>
+}
+
+export type LearnerCreateNestedOneWithoutSessionsInput = {
+  create?: Prisma.XOR<Prisma.LearnerCreateWithoutSessionsInput, Prisma.LearnerUncheckedCreateWithoutSessionsInput>
+  connectOrCreate?: Prisma.LearnerCreateOrConnectWithoutSessionsInput
+  connect?: Prisma.LearnerWhereUniqueInput
+}
+
+export type LearnerUpdateOneRequiredWithoutSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.LearnerCreateWithoutSessionsInput, Prisma.LearnerUncheckedCreateWithoutSessionsInput>
+  connectOrCreate?: Prisma.LearnerCreateOrConnectWithoutSessionsInput
+  upsert?: Prisma.LearnerUpsertWithoutSessionsInput
+  connect?: Prisma.LearnerWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LearnerUpdateToOneWithWhereWithoutSessionsInput, Prisma.LearnerUpdateWithoutSessionsInput>, Prisma.LearnerUncheckedUpdateWithoutSessionsInput>
+}
+
+export type LearnerCreateNestedOneWithoutReviewsInput = {
+  create?: Prisma.XOR<Prisma.LearnerCreateWithoutReviewsInput, Prisma.LearnerUncheckedCreateWithoutReviewsInput>
+  connectOrCreate?: Prisma.LearnerCreateOrConnectWithoutReviewsInput
+  connect?: Prisma.LearnerWhereUniqueInput
+}
+
+export type LearnerUpdateOneRequiredWithoutReviewsNestedInput = {
+  create?: Prisma.XOR<Prisma.LearnerCreateWithoutReviewsInput, Prisma.LearnerUncheckedCreateWithoutReviewsInput>
+  connectOrCreate?: Prisma.LearnerCreateOrConnectWithoutReviewsInput
+  upsert?: Prisma.LearnerUpsertWithoutReviewsInput
+  connect?: Prisma.LearnerWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LearnerUpdateToOneWithWhereWithoutReviewsInput, Prisma.LearnerUpdateWithoutReviewsInput>, Prisma.LearnerUncheckedUpdateWithoutReviewsInput>
 }
 
 export type LearnerCreateNestedOneWithoutUserInput = {
@@ -410,14 +544,234 @@ export type LearnerUncheckedUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.LearnerUpdateToOneWithWhereWithoutUserInput, Prisma.LearnerUpdateWithoutUserInput>, Prisma.LearnerUncheckedUpdateWithoutUserInput>
 }
 
+export type LearnerCreateWithoutProblemsInput = {
+  id?: string
+  name: string
+  profilePhoto?: string | null
+  address?: string | null
+  isDeleted?: boolean
+  averageRating?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutLearnerInput
+  sessions?: Prisma.ProblemSessionCreateNestedManyWithoutLearnerInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutLearnerInput
+}
+
+export type LearnerUncheckedCreateWithoutProblemsInput = {
+  id?: string
+  name: string
+  email: string
+  profilePhoto?: string | null
+  address?: string | null
+  isDeleted?: boolean
+  averageRating?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.ProblemSessionUncheckedCreateNestedManyWithoutLearnerInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutLearnerInput
+}
+
+export type LearnerCreateOrConnectWithoutProblemsInput = {
+  where: Prisma.LearnerWhereUniqueInput
+  create: Prisma.XOR<Prisma.LearnerCreateWithoutProblemsInput, Prisma.LearnerUncheckedCreateWithoutProblemsInput>
+}
+
+export type LearnerUpsertWithoutProblemsInput = {
+  update: Prisma.XOR<Prisma.LearnerUpdateWithoutProblemsInput, Prisma.LearnerUncheckedUpdateWithoutProblemsInput>
+  create: Prisma.XOR<Prisma.LearnerCreateWithoutProblemsInput, Prisma.LearnerUncheckedCreateWithoutProblemsInput>
+  where?: Prisma.LearnerWhereInput
+}
+
+export type LearnerUpdateToOneWithWhereWithoutProblemsInput = {
+  where?: Prisma.LearnerWhereInput
+  data: Prisma.XOR<Prisma.LearnerUpdateWithoutProblemsInput, Prisma.LearnerUncheckedUpdateWithoutProblemsInput>
+}
+
+export type LearnerUpdateWithoutProblemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutLearnerNestedInput
+  sessions?: Prisma.ProblemSessionUpdateManyWithoutLearnerNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutLearnerNestedInput
+}
+
+export type LearnerUncheckedUpdateWithoutProblemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.ProblemSessionUncheckedUpdateManyWithoutLearnerNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutLearnerNestedInput
+}
+
+export type LearnerCreateWithoutSessionsInput = {
+  id?: string
+  name: string
+  profilePhoto?: string | null
+  address?: string | null
+  isDeleted?: boolean
+  averageRating?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutLearnerInput
+  problems?: Prisma.ProblemPostCreateNestedManyWithoutLearnerInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutLearnerInput
+}
+
+export type LearnerUncheckedCreateWithoutSessionsInput = {
+  id?: string
+  name: string
+  email: string
+  profilePhoto?: string | null
+  address?: string | null
+  isDeleted?: boolean
+  averageRating?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  problems?: Prisma.ProblemPostUncheckedCreateNestedManyWithoutLearnerInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutLearnerInput
+}
+
+export type LearnerCreateOrConnectWithoutSessionsInput = {
+  where: Prisma.LearnerWhereUniqueInput
+  create: Prisma.XOR<Prisma.LearnerCreateWithoutSessionsInput, Prisma.LearnerUncheckedCreateWithoutSessionsInput>
+}
+
+export type LearnerUpsertWithoutSessionsInput = {
+  update: Prisma.XOR<Prisma.LearnerUpdateWithoutSessionsInput, Prisma.LearnerUncheckedUpdateWithoutSessionsInput>
+  create: Prisma.XOR<Prisma.LearnerCreateWithoutSessionsInput, Prisma.LearnerUncheckedCreateWithoutSessionsInput>
+  where?: Prisma.LearnerWhereInput
+}
+
+export type LearnerUpdateToOneWithWhereWithoutSessionsInput = {
+  where?: Prisma.LearnerWhereInput
+  data: Prisma.XOR<Prisma.LearnerUpdateWithoutSessionsInput, Prisma.LearnerUncheckedUpdateWithoutSessionsInput>
+}
+
+export type LearnerUpdateWithoutSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutLearnerNestedInput
+  problems?: Prisma.ProblemPostUpdateManyWithoutLearnerNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutLearnerNestedInput
+}
+
+export type LearnerUncheckedUpdateWithoutSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  problems?: Prisma.ProblemPostUncheckedUpdateManyWithoutLearnerNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutLearnerNestedInput
+}
+
+export type LearnerCreateWithoutReviewsInput = {
+  id?: string
+  name: string
+  profilePhoto?: string | null
+  address?: string | null
+  isDeleted?: boolean
+  averageRating?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutLearnerInput
+  problems?: Prisma.ProblemPostCreateNestedManyWithoutLearnerInput
+  sessions?: Prisma.ProblemSessionCreateNestedManyWithoutLearnerInput
+}
+
+export type LearnerUncheckedCreateWithoutReviewsInput = {
+  id?: string
+  name: string
+  email: string
+  profilePhoto?: string | null
+  address?: string | null
+  isDeleted?: boolean
+  averageRating?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  problems?: Prisma.ProblemPostUncheckedCreateNestedManyWithoutLearnerInput
+  sessions?: Prisma.ProblemSessionUncheckedCreateNestedManyWithoutLearnerInput
+}
+
+export type LearnerCreateOrConnectWithoutReviewsInput = {
+  where: Prisma.LearnerWhereUniqueInput
+  create: Prisma.XOR<Prisma.LearnerCreateWithoutReviewsInput, Prisma.LearnerUncheckedCreateWithoutReviewsInput>
+}
+
+export type LearnerUpsertWithoutReviewsInput = {
+  update: Prisma.XOR<Prisma.LearnerUpdateWithoutReviewsInput, Prisma.LearnerUncheckedUpdateWithoutReviewsInput>
+  create: Prisma.XOR<Prisma.LearnerCreateWithoutReviewsInput, Prisma.LearnerUncheckedCreateWithoutReviewsInput>
+  where?: Prisma.LearnerWhereInput
+}
+
+export type LearnerUpdateToOneWithWhereWithoutReviewsInput = {
+  where?: Prisma.LearnerWhereInput
+  data: Prisma.XOR<Prisma.LearnerUpdateWithoutReviewsInput, Prisma.LearnerUncheckedUpdateWithoutReviewsInput>
+}
+
+export type LearnerUpdateWithoutReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutLearnerNestedInput
+  problems?: Prisma.ProblemPostUpdateManyWithoutLearnerNestedInput
+  sessions?: Prisma.ProblemSessionUpdateManyWithoutLearnerNestedInput
+}
+
+export type LearnerUncheckedUpdateWithoutReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  problems?: Prisma.ProblemPostUncheckedUpdateManyWithoutLearnerNestedInput
+  sessions?: Prisma.ProblemSessionUncheckedUpdateManyWithoutLearnerNestedInput
+}
+
 export type LearnerCreateWithoutUserInput = {
   id?: string
   name: string
   profilePhoto?: string | null
   address?: string | null
   isDeleted?: boolean
+  averageRating?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  problems?: Prisma.ProblemPostCreateNestedManyWithoutLearnerInput
+  sessions?: Prisma.ProblemSessionCreateNestedManyWithoutLearnerInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutLearnerInput
 }
 
 export type LearnerUncheckedCreateWithoutUserInput = {
@@ -426,8 +780,12 @@ export type LearnerUncheckedCreateWithoutUserInput = {
   profilePhoto?: string | null
   address?: string | null
   isDeleted?: boolean
+  averageRating?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  problems?: Prisma.ProblemPostUncheckedCreateNestedManyWithoutLearnerInput
+  sessions?: Prisma.ProblemSessionUncheckedCreateNestedManyWithoutLearnerInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutLearnerInput
 }
 
 export type LearnerCreateOrConnectWithoutUserInput = {
@@ -452,8 +810,12 @@ export type LearnerUpdateWithoutUserInput = {
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  problems?: Prisma.ProblemPostUpdateManyWithoutLearnerNestedInput
+  sessions?: Prisma.ProblemSessionUpdateManyWithoutLearnerNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutLearnerNestedInput
 }
 
 export type LearnerUncheckedUpdateWithoutUserInput = {
@@ -462,10 +824,61 @@ export type LearnerUncheckedUpdateWithoutUserInput = {
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  problems?: Prisma.ProblemPostUncheckedUpdateManyWithoutLearnerNestedInput
+  sessions?: Prisma.ProblemSessionUncheckedUpdateManyWithoutLearnerNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutLearnerNestedInput
 }
 
+
+/**
+ * Count Type LearnerCountOutputType
+ */
+
+export type LearnerCountOutputType = {
+  problems: number
+  sessions: number
+  reviews: number
+}
+
+export type LearnerCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  problems?: boolean | LearnerCountOutputTypeCountProblemsArgs
+  sessions?: boolean | LearnerCountOutputTypeCountSessionsArgs
+  reviews?: boolean | LearnerCountOutputTypeCountReviewsArgs
+}
+
+/**
+ * LearnerCountOutputType without action
+ */
+export type LearnerCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LearnerCountOutputType
+   */
+  select?: Prisma.LearnerCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * LearnerCountOutputType without action
+ */
+export type LearnerCountOutputTypeCountProblemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProblemPostWhereInput
+}
+
+/**
+ * LearnerCountOutputType without action
+ */
+export type LearnerCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProblemSessionWhereInput
+}
+
+/**
+ * LearnerCountOutputType without action
+ */
+export type LearnerCountOutputTypeCountReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReviewWhereInput
+}
 
 
 export type LearnerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -475,9 +888,14 @@ export type LearnerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   profilePhoto?: boolean
   address?: boolean
   isDeleted?: boolean
+  averageRating?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  problems?: boolean | Prisma.Learner$problemsArgs<ExtArgs>
+  sessions?: boolean | Prisma.Learner$sessionsArgs<ExtArgs>
+  reviews?: boolean | Prisma.Learner$reviewsArgs<ExtArgs>
+  _count?: boolean | Prisma.LearnerCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["learner"]>
 
 export type LearnerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -487,6 +905,7 @@ export type LearnerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   profilePhoto?: boolean
   address?: boolean
   isDeleted?: boolean
+  averageRating?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -499,6 +918,7 @@ export type LearnerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   profilePhoto?: boolean
   address?: boolean
   isDeleted?: boolean
+  averageRating?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -511,13 +931,18 @@ export type LearnerSelectScalar = {
   profilePhoto?: boolean
   address?: boolean
   isDeleted?: boolean
+  averageRating?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type LearnerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "profilePhoto" | "address" | "isDeleted" | "createdAt" | "updatedAt", ExtArgs["result"]["learner"]>
+export type LearnerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "profilePhoto" | "address" | "isDeleted" | "averageRating" | "createdAt" | "updatedAt", ExtArgs["result"]["learner"]>
 export type LearnerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  problems?: boolean | Prisma.Learner$problemsArgs<ExtArgs>
+  sessions?: boolean | Prisma.Learner$sessionsArgs<ExtArgs>
+  reviews?: boolean | Prisma.Learner$reviewsArgs<ExtArgs>
+  _count?: boolean | Prisma.LearnerCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type LearnerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -530,6 +955,9 @@ export type $LearnerPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "Learner"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    problems: Prisma.$ProblemPostPayload<ExtArgs>[]
+    sessions: Prisma.$ProblemSessionPayload<ExtArgs>[]
+    reviews: Prisma.$ReviewPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -538,6 +966,7 @@ export type $LearnerPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     profilePhoto: string | null
     address: string | null
     isDeleted: boolean
+    averageRating: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["learner"]>
@@ -935,6 +1364,9 @@ readonly fields: LearnerFieldRefs;
 export interface Prisma__LearnerClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  problems<T extends Prisma.Learner$problemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Learner$problemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProblemPostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sessions<T extends Prisma.Learner$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Learner$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProblemSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reviews<T extends Prisma.Learner$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Learner$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -970,6 +1402,7 @@ export interface LearnerFieldRefs {
   readonly profilePhoto: Prisma.FieldRef<"Learner", 'String'>
   readonly address: Prisma.FieldRef<"Learner", 'String'>
   readonly isDeleted: Prisma.FieldRef<"Learner", 'Boolean'>
+  readonly averageRating: Prisma.FieldRef<"Learner", 'Float'>
   readonly createdAt: Prisma.FieldRef<"Learner", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Learner", 'DateTime'>
 }
@@ -1365,6 +1798,78 @@ export type LearnerDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Learners to delete.
    */
   limit?: number
+}
+
+/**
+ * Learner.problems
+ */
+export type Learner$problemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProblemPost
+   */
+  select?: Prisma.ProblemPostSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProblemPost
+   */
+  omit?: Prisma.ProblemPostOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProblemPostInclude<ExtArgs> | null
+  where?: Prisma.ProblemPostWhereInput
+  orderBy?: Prisma.ProblemPostOrderByWithRelationInput | Prisma.ProblemPostOrderByWithRelationInput[]
+  cursor?: Prisma.ProblemPostWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProblemPostScalarFieldEnum | Prisma.ProblemPostScalarFieldEnum[]
+}
+
+/**
+ * Learner.sessions
+ */
+export type Learner$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProblemSession
+   */
+  select?: Prisma.ProblemSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProblemSession
+   */
+  omit?: Prisma.ProblemSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProblemSessionInclude<ExtArgs> | null
+  where?: Prisma.ProblemSessionWhereInput
+  orderBy?: Prisma.ProblemSessionOrderByWithRelationInput | Prisma.ProblemSessionOrderByWithRelationInput[]
+  cursor?: Prisma.ProblemSessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProblemSessionScalarFieldEnum | Prisma.ProblemSessionScalarFieldEnum[]
+}
+
+/**
+ * Learner.reviews
+ */
+export type Learner$reviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Review
+   */
+  select?: Prisma.ReviewSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Review
+   */
+  omit?: Prisma.ReviewOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewInclude<ExtArgs> | null
+  where?: Prisma.ReviewWhereInput
+  orderBy?: Prisma.ReviewOrderByWithRelationInput | Prisma.ReviewOrderByWithRelationInput[]
+  cursor?: Prisma.ReviewWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReviewScalarFieldEnum | Prisma.ReviewScalarFieldEnum[]
 }
 
 /**

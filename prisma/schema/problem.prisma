@@ -1,0 +1,101 @@
+model ProblemPost {
+    id            String        @id @default(uuid())
+    title         String
+    description   String
+    image         String?
+    requiredSkill String
+    coinReward    Int
+    status        ProblemStatus @default(OPEN)
+
+    learnerId String
+    learner   Learner @relation(fields: [learnerId], references: [id])
+
+    createdAt      DateTime        @default(now())
+    updatedAt      DateTime        @updatedAt
+    applications   Application[]
+    problemSession ProblemSession?
+
+    @@map("problem_posts")
+}
+
+model Application {
+    id           String            @id @default(uuid())
+    problemId    String
+    instructorId String
+    note         String
+    status       ApplicationStatus @default(PENDING)
+
+    problem    ProblemPost @relation(fields: [problemId], references: [id])
+    instructor Instructor  @relation(fields: [instructorId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@unique([problemId, instructorId])
+    @@map("applications")
+}
+
+model ProblemSession {
+    id           String @id @default(uuid())
+    problemId    String @unique
+    learnerId    String
+    instructorId String
+    videoCallId  String
+
+    status    SessionStatus @default(SCHEDULED)
+    startedAt DateTime      @default(now())
+    endedAt   DateTime?
+
+    learnerSolveStatus        SolveStatus?
+    instructorMarkedCompleted Boolean      @default(false)
+
+    problem    ProblemPost @relation(fields: [problemId], references: [id])
+    learner    Learner     @relation(fields: [learnerId], references: [id])
+    instructor Instructor  @relation(fields: [instructorId], references: [id])
+
+    coinTransaction CoinTransaction?
+    review          Review[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("problem_sessions")
+}
+
+model CoinTransaction {
+    id         String            @id @default(uuid())
+    sessionId  String            @unique
+    fromUserId String
+    toUserId   String
+    amount     Int
+    status     TransactionStatus @default(PENDING)
+
+    session ProblemSession @relation(fields: [sessionId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("coin_transactions")
+}
+
+model Review {
+    id        String   @id @default(uuid())
+    rating    Int
+    comment   String?
+    createdAt DateTime @default(now())
+
+    sessionId String
+    session   ProblemSession @relation(fields: [sessionId], references: [id])
+
+    reviewerId   String
+    reviewerRole UserRole
+
+    learnerId String
+    learner   Learner @relation(fields: [learnerId], references: [id])
+
+    instructorId String
+    instructor   Instructor @relation(fields: [instructorId], references: [id])
+
+    @@unique([sessionId, reviewerId])
+    @@map("reviews")
+}

@@ -27,36 +27,47 @@ export const UserStatus = {
 export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
 
 
-export const IssueStatus = {
+export const ProblemStatus = {
   OPEN: 'OPEN',
-  IN_SESSION: 'IN_SESSION',
-  SOLVED: 'SOLVED',
-  NOT_SOLVED: 'NOT_SOLVED'
+  LOCKED: 'LOCKED',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
 } as const
 
-export type IssueStatus = (typeof IssueStatus)[keyof typeof IssueStatus]
+export type ProblemStatus = (typeof ProblemStatus)[keyof typeof ProblemStatus]
+
+
+export const ApplicationStatus = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type ApplicationStatus = (typeof ApplicationStatus)[keyof typeof ApplicationStatus]
 
 
 export const SessionStatus = {
-  ONGOING: 'ONGOING',
-  ENDED: 'ENDED'
+  SCHEDULED: 'SCHEDULED',
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED'
 } as const
 
 export type SessionStatus = (typeof SessionStatus)[keyof typeof SessionStatus]
 
 
-export const PaymentStatus = {
+export const SolveStatus = {
+  SOLVED: 'SOLVED',
+  NOT_SOLVED: 'NOT_SOLVED'
+} as const
+
+export type SolveStatus = (typeof SolveStatus)[keyof typeof SolveStatus]
+
+
+export const TransactionStatus = {
   PENDING: 'PENDING',
   SUCCESS: 'SUCCESS',
   FAILED: 'FAILED'
 } as const
 
-export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
-
-
-export const ReviewTarget = {
-  LEARNER: 'LEARNER',
-  INSTRUCTOR: 'INSTRUCTOR'
-} as const
-
-export type ReviewTarget = (typeof ReviewTarget)[keyof typeof ReviewTarget]
+export type TransactionStatus = (typeof TransactionStatus)[keyof typeof TransactionStatus]
